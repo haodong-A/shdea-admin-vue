@@ -39,7 +39,7 @@ const { dict } = useDict();
 // crud
 const Crud = useCrud(
 	{
-		service: service.test
+		// service: service.test
 	},
 	app => {
 		app.refresh({ size: 10 });
