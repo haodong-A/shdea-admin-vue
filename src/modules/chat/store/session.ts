@@ -17,15 +17,15 @@ export const useSessionStore = defineStore('chat-session', () => {
 		loading.value = true;
 
 		// 发送请求
-		await service.chat.session.page(params).then(res => {
-			// 默认加载第一个会话的消息
-			if (!value.value) {
-				set(res.list[0]);
-			}
-
-			// 设置列表
-			list.value = res.list;
-		});
+		// await service.chat.session.page(params).then(res => {
+		// 	// 默认加载第一个会话的消息
+		// 	if (!value.value) {
+		// 		set(res.list[0]);
+		// 	}
+		//
+		// 	// 设置列表
+		// 	list.value = res.list;
+		// });
 
 		loading.value = false;
 	}

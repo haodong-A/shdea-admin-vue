@@ -26,13 +26,13 @@ export const useMessageStore = defineStore('chat-message', () => {
 		}
 
 		// 发送请求
-		await service.chat.message.page(params).then(res => {
-			list.value = res.list.map(e => {
-				e.content = JSON.parse(e.content);
-				return e;
-			});
-			pagination.value = res.pagination;
-		});
+		// await service.chat.message.page(params).then(res => {
+		// 	list.value = res.list.map(e => {
+		// 		e.content = JSON.parse(e.content);
+		// 		return e;
+		// 	});
+		// 	pagination.value = res.pagination;
+		// });
 
 		loading.value = false;
 	}
