@@ -68,7 +68,7 @@
 			<cl-svg name="bg"></cl-svg>
 		</div>
 
-		<a href="https://shdea-china.com" class="copyright"> Copyright © SHDEA </a>
+		<a href="https://www.shdea-cook.com" class="copyright"> Copyright © SHDEA </a>
 	</div>
 </template>
 
