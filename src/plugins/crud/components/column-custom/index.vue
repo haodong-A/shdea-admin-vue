@@ -1,6 +1,6 @@
 <template>
 	<div class="cl-column-custom__wrap">
-		<el-button @click="open">自定义列</el-button>
+		<el-button @click="open">筛选</el-button>
 
 		<cl-dialog v-model="visible" title="自定义列">
 			<div class="cl-column-custom__dialog">

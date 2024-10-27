@@ -30,6 +30,7 @@
 		"@vueuse/core": "^11.1.0",
 		"@wangeditor/editor": "^5.1.23",
 		"@wangeditor/editor-for-vue": "^5.1.12",
+		"@wangeditor/plugin-link-card": "^1.0.0",
 		"@ziuchen/bytemd-plugin-highlight-theme": "^1.0.6",
 		"@ziuchen/bytemd-plugin-markdown-theme": "^1.0.2",
 		"axios": "^1.7.7",
