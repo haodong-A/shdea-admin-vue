@@ -1,5 +1,20 @@
 declare namespace Eps {
-	interface BaseSysLogEntity {
+	interface BaseSysDepartmentEntity {
+		/**
+		 * 部门名称
+		 */
+		name?: string;
+
+		/**
+		 * 上级部门ID
+		 */
+		parentId?: number;
+
+		/**
+		 * 排序
+		 */
+		orderNum?: number;
+
 		/**
 		 * 任意键值
 		 */
@@ -8,12 +23,65 @@ declare namespace Eps {
 
 	interface BaseSysUserEntity {
 		/**
-		 * 任意键值
+		 * 部门ID
 		 */
-		[key: string]: any;
-	}
+		departmentId?: number;
 
-	interface BaseSysDepartmentEntity {
+		/**
+		 * 姓名
+		 */
+		name?: string;
+
+		/**
+		 * 用户名
+		 */
+		username?: string;
+
+		/**
+		 * 密码
+		 */
+		password?: string;
+
+		/**
+		 * 密码版本
+		 */
+		passwordV?: number;
+
+		/**
+		 * 昵称
+		 */
+		nickName?: string;
+
+		/**
+		 * 头像
+		 */
+		headImg?: string;
+
+		/**
+		 * 手机号
+		 */
+		phone?: string;
+
+		/**
+		 * 邮箱
+		 */
+		email?: string;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 状态 0:禁用 1：启用
+		 */
+		status?: number;
+
+		/**
+		 * socketId
+		 */
+		socketId?: string;
+
 		/**
 		 * 任意键值
 		 */
@@ -22,12 +90,87 @@ declare namespace Eps {
 
 	interface BaseSysMenuEntity {
 		/**
+		 * 父菜单ID
+		 */
+		parentId?: number;
+
+		/**
+		 * 菜单名称
+		 */
+		name?: string;
+
+		/**
+		 * 权限
+		 */
+		perms?: string;
+
+		/**
+		 * 类型 0：目录 1：菜单 2：按钮
+		 */
+		type?: number;
+
+		/**
+		 * 图标
+		 */
+		icon?: string;
+
+		/**
+		 * 排序
+		 */
+		orderNum?: number;
+
+		/**
+		 * 菜单地址
+		 */
+		router?: string;
+
+		/**
+		 * 视图地址
+		 */
+		viewPath?: string;
+
+		/**
+		 * 路由缓存
+		 */
+		keepAlive?: boolean;
+
+		/**
+		 * 是否显示
+		 */
+		isShow?: boolean;
+
+		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
 	interface BaseSysParamEntity {
+		/**
+		 * 键
+		 */
+		keyName?: string;
+
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 数据
+		 */
+		data?: string;
+
+		/**
+		 * 数据类型 0:字符串 1:数组 2:键值对
+		 */
+		dataType?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
 		/**
 		 * 任意键值
 		 */
@@ -36,40 +179,67 @@ declare namespace Eps {
 
 	interface BaseSysRoleEntity {
 		/**
-		 * 任意键值
+		 * 用户ID
 		 */
-		[key: string]: any;
-	}
+		userId?: number;
 
-	interface TaskInfoEntity {
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 角色标签
+		 */
+		label?: string;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * 数据权限是否关联上下级
+		 */
+		relevance?: number;
+
+		/**
+		 * 菜单权限
+		 */
+		menuIdList?: string;
+
+		/**
+		 * 部门权限
+		 */
+		departmentIdList?: string;
+
 		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
-	interface GoodsInfoEntity {
+	interface BaseSysLogEntity {
 		/**
-		 * 任意键值
+		 * 用户ID
 		 */
-		[key: string]: any;
-	}
+		userId?: number;
 
-	interface GoodsCategoryEntity {
 		/**
-		 * 任意键值
+		 * 行为
 		 */
-		[key: string]: any;
-	}
+		action?: string;
 
-	interface PluginInfoEntity {
 		/**
-		 * 任意键值
+		 * IP
 		 */
-		[key: string]: any;
-	}
+		ip?: string;
 
-	interface DictTypeEntity {
+		/**
+		 * 参数
+		 */
+		params?: string;
+
 		/**
 		 * 任意键值
 		 */
@@ -78,12 +248,176 @@ declare namespace Eps {
 
 	interface DictInfoEntity {
 		/**
+		 * 类型ID
+		 */
+		typeId?: number;
+
+		/**
+		 * 父ID
+		 */
+		parentId?: number;
+
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 值
+		 */
+		value?: string;
+
+		/**
+		 * 排序
+		 */
+		orderNum?: number;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
-	interface SpaceTypeEntity {
+	interface DictTypeEntity {
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 标识
+		 */
+		key?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface UserInfoEntity {
+		/**
+		 * 登录唯一ID
+		 */
+		unionid?: string;
+
+		/**
+		 * 头像
+		 */
+		avatarUrl?: string;
+
+		/**
+		 * 昵称
+		 */
+		nickName?: string;
+
+		/**
+		 * 手机号
+		 */
+		phone?: string;
+
+		/**
+		 * 性别 0-未知 1-男 2-女
+		 */
+		gender?: number;
+
+		/**
+		 * 状态 0-禁用 1-正常 2-已注销
+		 */
+		status?: number;
+
+		/**
+		 * 登录方式 0-小程序 1-公众号 2-H5
+		 */
+		loginType?: string;
+
+		/**
+		 * 密码
+		 */
+		password?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface TaskInfoEntity {
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 任务ID
+		 */
+		jobId?: string;
+
+		/**
+		 * 最大执行次数 不传为无限次
+		 */
+		repeatCount?: number;
+
+		/**
+		 * 每间隔多少毫秒执行一次 如果cron设置了 这项设置就无效
+		 */
+		every?: number;
+
+		/**
+		 * 状态 0:停止 1：运行
+		 */
+		status?: number;
+
+		/**
+		 * 服务实例名称
+		 */
+		service?: string;
+
+		/**
+		 * 状态 0:cron 1：时间间隔
+		 */
+		taskType?: number;
+
+		/**
+		 * 状态 0:系统 1：用户
+		 */
+		type?: number;
+
+		/**
+		 * 任务数据
+		 */
+		data?: string;
+
+		/**
+		 * 备注
+		 */
+		remark?: string;
+
+		/**
+		 * cron
+		 */
+		cron?: string;
+
+		/**
+		 * 下一次执行时间
+		 */
+		nextRunTime?: Date;
+
+		/**
+		 * 开始时间
+		 */
+		startDate?: Date;
+
+		/**
+		 * 结束时间
+		 */
+		endDate?: Date;
+
 		/**
 		 * 任意键值
 		 */
@@ -92,6 +426,152 @@ declare namespace Eps {
 
 	interface SpaceInfoEntity {
 		/**
+		 * 地址
+		 */
+		url?: string;
+
+		/**
+		 * 类型
+		 */
+		type?: string;
+
+		/**
+		 * 分类ID
+		 */
+		classifyId?: number;
+
+		/**
+		 * 文件id
+		 */
+		fileId?: string;
+
+		/**
+		 * 文件名
+		 */
+		name?: string;
+
+		/**
+		 * 文件大小
+		 */
+		size?: number;
+
+		/**
+		 * 文档版本
+		 */
+		version?: number;
+
+		/**
+		 * 文件位置
+		 */
+		filePath?: string;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface SpaceTypeEntity {
+		/**
+		 * 类别名称
+		 */
+		name?: string;
+
+		/**
+		 * 父分类ID
+		 */
+		parentId?: number;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface GoodsInfoEntity {
+		/**
+		 * 编号
+		 */
+		goodsId?: string;
+
+		/**
+		 * 标题
+		 */
+		title?: string;
+
+		/**
+		 * 示例图
+		 */
+		cover?: string;
+
+		/**
+		 * 分类
+		 */
+		category?: string;
+
+		/**
+		 * 品牌
+		 */
+		brand?: string;
+
+		/**
+		 * 特殊属性
+		 */
+		specificAttributes?: string;
+
+		/**
+		 * 其他属性
+		 */
+		otherAttributes?: string;
+
+		/**
+		 * 交货
+		 */
+		delivery?: string;
+
+		/**
+		 * 状态 0-下架 1-上架
+		 */
+		status?: number;
+
+		/**
+		 * 浏览次数
+		 */
+		viewCount?: number;
+
+		/**
+		 * 收藏次数
+		 */
+		favoriteCount?: number;
+
+		/**
+		 * 任意键值
+		 */
+		[key: string]: any;
+	}
+
+	interface GoodsCategoryEntity {
+		/**
+		 * 名称
+		 */
+		categoryName?: string;
+
+		/**
+		 * 父分类ID
+		 */
+		parentCategoryId?: number;
+
+		/**
+		 * 排序
+		 */
+		sortOrder?: number;
+
+		/**
+		 * 状态 0-禁用 1-正常
+		 */
+		status?: number;
+
+		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
@@ -99,12 +579,97 @@ declare namespace Eps {
 
 	interface RecycleDataEntity {
 		/**
+		 * 表信息
+		 */
+		entityInfo?: string;
+
+		/**
+		 * 操作人
+		 */
+		userId?: number;
+
+		/**
+		 * 被删除的数据
+		 */
+		data?: string;
+
+		/**
+		 * 请求的接口
+		 */
+		url?: string;
+
+		/**
+		 * 请求参数
+		 */
+		params?: string;
+
+		/**
+		 * 删除数据条数
+		 */
+		count?: number;
+
+		/**
 		 * 任意键值
 		 */
 		[key: string]: any;
 	}
 
-	interface UserInfoEntity {
+	interface PluginInfoEntity {
+		/**
+		 * 名称
+		 */
+		name?: string;
+
+		/**
+		 * 简介
+		 */
+		description?: string;
+
+		/**
+		 * 实例对象
+		 */
+		key?: string;
+
+		/**
+		 * Hook
+		 */
+		hook?: string;
+
+		/**
+		 * 描述
+		 */
+		readme?: string;
+
+		/**
+		 * 版本
+		 */
+		version?: string;
+
+		/**
+		 * Logo(base64)
+		 */
+		logo?: string;
+
+		/**
+		 * 作者
+		 */
+		author?: string;
+
+		/**
+		 * 状态 0-禁用 1-启用
+		 */
+		status?: number;
+
+		/**
+		 * 插件的plugin.json
+		 */
+		pluginJson?: string;
+
+		/**
+		 * 配置
+		 */
+		config?: string;
+
 		/**
 		 * 任意键值
 		 */
@@ -127,261 +692,24 @@ declare namespace Eps {
 
 	type json = any;
 
-	interface BaseComm {
-		/**
-		 * upload
-		 */
-		upload(data?: any): Promise<any>;
-
-		/**
-		 * permmenu
-		 */
-		permmenu(data?: any): Promise<any>;
-
-		/**
-		 * uploadMode
-		 */
-		uploadMode(data?: any): Promise<any>;
-
-		/**
-		 * logout
-		 */
-		logout(data?: any): Promise<any>;
-
-		/**
-		 * personUpdate
-		 */
-		personUpdate(data?: any): Promise<any>;
-
-		/**
-		 * person
-		 */
-		person(data?: any): Promise<any>;
-
-		/**
-		 * eps
-		 */
-		eps(data?: any): Promise<any>;
-
-		/**
-		 * program
-		 */
-		program(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			upload: string;
-			permmenu: string;
-			uploadMode: string;
-			logout: string;
-			personUpdate: string;
-			person: string;
-			eps: string;
-			program: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			upload: boolean;
-			permmenu: boolean;
-			uploadMode: boolean;
-			logout: boolean;
-			personUpdate: boolean;
-			person: boolean;
-			eps: boolean;
-			program: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface BaseSysLog {
-		/**
-		 * getKeep
-		 */
-		getKeep(data?: any): Promise<any>;
-
-		/**
-		 * setKeep
-		 */
-		setKeep(data?: any): Promise<any>;
-
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: BaseSysLogEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * clear
-		 */
-		clear(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { getKeep: string; setKeep: string; page: string; clear: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: { getKeep: boolean; setKeep: boolean; page: boolean; clear: boolean };
-
-		request: Service["request"];
-	}
-
-	interface BaseSysDepartment {
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * order
-		 */
-		order(data?: any): Promise<any>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<BaseSysDepartmentEntity[]>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: { add: string; order: string; delete: string; list: string; update: string };
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			add: boolean;
-			order: boolean;
-			delete: boolean;
-			list: boolean;
-			update: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface BaseSysParam {
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<BaseSysParamEntity>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * html
-		 */
-		html(data?: any): Promise<any>;
-
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: BaseSysParamEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			info: string;
-			update: string;
-			html: string;
-			page: string;
-			add: string;
-			delete: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			info: boolean;
-			update: boolean;
-			html: boolean;
-			page: boolean;
-			add: boolean;
-			delete: boolean;
-		};
-
-		request: Service["request"];
-	}
-
 	interface BaseSysMenu {
 		/**
-		 * list
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 查询
 		 */
 		list(data?: any): Promise<BaseSysMenuEntity[]>;
 
 		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<BaseSysMenuEntity>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * import
-		 */
-		import(data?: any): Promise<any>;
-
-		/**
-		 * create
-		 */
-		create(data?: any): Promise<any>;
-
-		/**
-		 * page
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -390,71 +718,221 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * export
+		 * 导出
 		 */
 		export(data?: any): Promise<any>;
+
+		/**
+		 * 创建代码
+		 */
+		create(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 导入
+		 */
+		import(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<BaseSysMenuEntity>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
-			list: string;
-			delete: string;
 			add: string;
-			info: string;
-			update: string;
-			import: string;
-			create: string;
+			delete: string;
+			list: string;
 			page: string;
 			export: string;
+			create: string;
+			update: string;
+			import: string;
+			info: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
-			list: boolean;
-			delete: boolean;
 			add: boolean;
-			info: boolean;
-			update: boolean;
-			import: boolean;
-			create: boolean;
+			delete: boolean;
+			list: boolean;
 			page: boolean;
 			export: boolean;
+			create: boolean;
+			update: boolean;
+			import: boolean;
+			info: boolean;
 		};
+
+		request: Service["request"];
+	}
+
+	interface BaseSysParam {
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<BaseSysParamEntity>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 根据键返回网页的参数值
+		 */
+		html(data: { key: string }): Promise<any>;
+
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: BaseSysParamEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			update: string;
+			info: string;
+			delete: string;
+			add: string;
+			html: string;
+			page: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			update: boolean;
+			info: boolean;
+			delete: boolean;
+			add: boolean;
+			html: boolean;
+			page: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface BaseSysDepartment {
+		/**
+		 * 排序
+		 */
+		order(data?: any): Promise<any>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<BaseSysDepartmentEntity[]>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { order: string; add: string; update: string; list: string; delete: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			order: boolean;
+			add: boolean;
+			update: boolean;
+			list: boolean;
+			delete: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface BaseSysLog {
+		/**
+		 * 获得日志报错时间
+		 */
+		getKeep(data?: any): Promise<any>;
+
+		/**
+		 * 清理日志
+		 */
+		clear(data?: any): Promise<any>;
+
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: BaseSysLogEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 设置日志保存时间
+		 */
+		setKeep(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: { getKeep: string; clear: string; page: string; setKeep: string };
+
+		/**
+		 * 权限状态
+		 */
+		_permission: { getKeep: boolean; clear: boolean; page: boolean; setKeep: boolean };
 
 		request: Service["request"];
 	}
 
 	interface BaseSysRole {
 		/**
-		 * list
-		 */
-		list(data?: any): Promise<BaseSysRoleEntity[]>;
-
-		/**
-		 * delete
+		 * 删除
 		 */
 		delete(data?: any): Promise<any>;
 
 		/**
-		 * info
+		 * 查询
 		 */
-		info(data?: any): Promise<BaseSysRoleEntity>;
+		list(data?: any): Promise<BaseSysRoleEntity[]>;
 
 		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * page
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -463,27 +941,42 @@ declare namespace Eps {
 		}>;
 
 		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<BaseSysRoleEntity>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
 		 * 权限标识
 		 */
 		permission: {
-			list: string;
 			delete: string;
+			list: string;
+			page: string;
 			info: string;
 			add: string;
 			update: string;
-			page: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
-			list: boolean;
 			delete: boolean;
+			list: boolean;
+			page: boolean;
 			info: boolean;
 			add: boolean;
 			update: boolean;
-			page: boolean;
 		};
 
 		request: Service["request"];
@@ -491,32 +984,27 @@ declare namespace Eps {
 
 	interface BaseSysUser {
 		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<BaseSysUserEntity[]>;
-
-		/**
-		 * update
+		 * 修改
 		 */
 		update(data?: any): Promise<any>;
 
 		/**
-		 * move
+		 * 查询
 		 */
-		move(data?: any): Promise<any>;
+		list(data?: any): Promise<BaseSysUserEntity[]>;
 
 		/**
-		 * info
+		 * 新增
 		 */
-		info(data?: any): Promise<BaseSysUserEntity>;
+		add(data?: any): Promise<any>;
 
 		/**
-		 * page
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -525,34 +1013,111 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * delete
+		 * 信息
 		 */
-		delete(data?: any): Promise<any>;
+		info(data: { id: integer }): Promise<BaseSysUserEntity>;
+
+		/**
+		 * 移动部门
+		 */
+		move(data?: any): Promise<any>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
-			add: string;
-			list: string;
 			update: string;
-			move: string;
-			info: string;
-			page: string;
+			list: string;
+			add: string;
 			delete: string;
+			page: string;
+			info: string;
+			move: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
-			add: boolean;
-			list: boolean;
 			update: boolean;
-			move: boolean;
-			info: boolean;
-			page: boolean;
+			list: boolean;
+			add: boolean;
 			delete: boolean;
+			page: boolean;
+			info: boolean;
+			move: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface BaseComm {
+		/**
+		 * 个人信息
+		 */
+		person(data?: any): Promise<any>;
+
+		/**
+		 * 编程
+		 */
+		program(data?: any): Promise<any>;
+
+		/**
+		 * 实体信息与路径
+		 */
+		eps(data?: any): Promise<any>;
+
+		/**
+		 * 文件上传模式
+		 */
+		uploadMode(data?: any): Promise<any>;
+
+		/**
+		 * 权限与菜单
+		 */
+		permmenu(data?: any): Promise<any>;
+
+		/**
+		 * 修改个人信息
+		 */
+		personUpdate(data?: any): Promise<any>;
+
+		/**
+		 * 退出
+		 */
+		logout(data?: any): Promise<any>;
+
+		/**
+		 * 文件上传
+		 */
+		upload(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			person: string;
+			program: string;
+			eps: string;
+			uploadMode: string;
+			permmenu: string;
+			personUpdate: string;
+			logout: string;
+			upload: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			person: boolean;
+			program: boolean;
+			eps: boolean;
+			uploadMode: boolean;
+			permmenu: boolean;
+			personUpdate: boolean;
+			logout: boolean;
+			upload: boolean;
 		};
 
 		request: Service["request"];
@@ -560,312 +1125,57 @@ declare namespace Eps {
 
 	interface BaseOpen {
 		/**
-		 * eps
-		 */
-		eps(data?: any): Promise<any>;
-
-		/**
-		 * html
-		 */
-		html(data?: any): Promise<any>;
-
-		/**
-		 * login
+		 * 登录
 		 */
 		login(data?: any): Promise<any>;
 
 		/**
-		 * captcha
+		 * 实体信息与路径
 		 */
-		captcha(data?: any): Promise<any>;
+		eps(data?: any): Promise<any>;
 
 		/**
-		 * refreshToken
+		 * 刷新token
 		 */
-		refreshToken(data?: any): Promise<any>;
+		refreshToken(data: { refreshToken: string }): Promise<any>;
+
+		/**
+		 * 获得网页内容的参数值
+		 */
+		html(data?: any): Promise<any>;
+
+		/**
+		 * 验证码
+		 */
+		captcha(data: {
+			/** 类型：svg|base64  */
+			type?: string;
+			/** 宽度  */
+			width?: integer;
+			/** 高度  */
+			height?: integer;
+		}): Promise<any>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
-			eps: string;
-			html: string;
 			login: string;
-			captcha: string;
+			eps: string;
 			refreshToken: string;
+			html: string;
+			captcha: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
-			eps: boolean;
-			html: boolean;
 			login: boolean;
-			captcha: boolean;
+			eps: boolean;
 			refreshToken: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface RecycleData {
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: RecycleDataEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<RecycleDataEntity[]>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<RecycleDataEntity>;
-
-		/**
-		 * restore
-		 */
-		restore(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			page: string;
-			delete: string;
-			list: string;
-			add: string;
-			update: string;
-			info: string;
-			restore: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			page: boolean;
-			delete: boolean;
-			list: boolean;
-			add: boolean;
-			update: boolean;
-			info: boolean;
-			restore: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface UserInfo {
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: UserInfoEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<UserInfoEntity[]>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<UserInfoEntity>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			page: string;
-			delete: string;
-			update: string;
-			list: string;
-			add: string;
-			info: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			page: boolean;
-			delete: boolean;
-			update: boolean;
-			list: boolean;
-			add: boolean;
-			info: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface DictType {
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: DictTypeEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<DictTypeEntity[]>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<DictTypeEntity>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			page: string;
-			list: string;
-			delete: string;
-			add: string;
-			info: string;
-			update: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			page: boolean;
-			list: boolean;
-			delete: boolean;
-			add: boolean;
-			info: boolean;
-			update: boolean;
-		};
-
-		request: Service["request"];
-	}
-
-	interface DictInfo {
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<DictInfoEntity[]>;
-
-		/**
-		 * data
-		 */
-		data(data?: any): Promise<any>;
-
-		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * info
-		 */
-		info(data?: any): Promise<DictInfoEntity>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * page
-		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: DictInfoEntity[];
-			[key: string]: any;
-		}>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * 权限标识
-		 */
-		permission: {
-			list: string;
-			data: string;
-			delete: string;
-			info: string;
-			update: string;
-			page: string;
-			add: string;
-		};
-
-		/**
-		 * 权限状态
-		 */
-		_permission: {
-			list: boolean;
-			data: boolean;
-			delete: boolean;
-			info: boolean;
-			update: boolean;
-			page: boolean;
-			add: boolean;
+			html: boolean;
+			captcha: boolean;
 		};
 
 		request: Service["request"];
@@ -873,17 +1183,22 @@ declare namespace Eps {
 
 	interface SpaceInfo {
 		/**
-		 * info
+		 * 信息
 		 */
-		info(data?: any): Promise<SpaceInfoEntity>;
+		info(data: { id: integer }): Promise<SpaceInfoEntity>;
 
 		/**
-		 * add
+		 * 查询
 		 */
-		add(data?: any): Promise<any>;
+		list(data?: any): Promise<SpaceInfoEntity[]>;
 
 		/**
-		 * page
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -892,30 +1207,25 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * delete
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 删除
 		 */
 		delete(data?: any): Promise<any>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<SpaceInfoEntity[]>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
 			info: string;
-			add: string;
-			page: string;
-			delete: string;
-			update: string;
 			list: string;
+			update: string;
+			page: string;
+			add: string;
+			delete: string;
 		};
 
 		/**
@@ -923,11 +1233,11 @@ declare namespace Eps {
 		 */
 		_permission: {
 			info: boolean;
-			add: boolean;
-			page: boolean;
-			delete: boolean;
-			update: boolean;
 			list: boolean;
+			update: boolean;
+			page: boolean;
+			add: boolean;
+			delete: boolean;
 		};
 
 		request: Service["request"];
@@ -935,27 +1245,22 @@ declare namespace Eps {
 
 	interface SpaceType {
 		/**
-		 * list
-		 */
-		list(data?: any): Promise<SpaceTypeEntity[]>;
-
-		/**
-		 * add
+		 * 新增
 		 */
 		add(data?: any): Promise<any>;
 
 		/**
-		 * info
+		 * 查询
 		 */
-		info(data?: any): Promise<SpaceTypeEntity>;
+		list(data?: any): Promise<SpaceTypeEntity[]>;
 
 		/**
-		 * delete
+		 * 修改
 		 */
-		delete(data?: any): Promise<any>;
+		update(data?: any): Promise<any>;
 
 		/**
-		 * page
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -964,20 +1269,93 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * update
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<SpaceTypeEntity>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			add: string;
+			list: string;
+			update: string;
+			page: string;
+			delete: string;
+			info: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			add: boolean;
+			list: boolean;
+			update: boolean;
+			page: boolean;
+			delete: boolean;
+			info: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface DictInfo {
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<DictInfoEntity[]>;
+
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: DictInfoEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 修改
 		 */
 		update(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<DictInfoEntity>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 获得字典数据
+		 */
+		data(data?: any): Promise<any>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
 			list: string;
+			page: string;
 			add: string;
+			update: string;
 			info: string;
 			delete: string;
-			page: string;
-			update: string;
+			data: string;
 		};
 
 		/**
@@ -985,94 +1363,74 @@ declare namespace Eps {
 		 */
 		_permission: {
 			list: boolean;
+			page: boolean;
 			add: boolean;
+			update: boolean;
 			info: boolean;
 			delete: boolean;
-			page: boolean;
-			update: boolean;
+			data: boolean;
 		};
 
 		request: Service["request"];
 	}
 
-	interface TaskInfo {
+	interface DictType {
 		/**
-		 * stop
-		 */
-		stop(data?: any): Promise<any>;
-
-		/**
-		 * start
-		 */
-		start(data?: any): Promise<any>;
-
-		/**
-		 * page
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: TaskInfoEntity[];
+			list: DictTypeEntity[];
 			[key: string]: any;
 		}>;
 
 		/**
-		 * once
+		 * 修改
 		 */
-		once(data?: any): Promise<any>;
+		update(data?: any): Promise<any>;
 
 		/**
-		 * add
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<DictTypeEntity>;
+
+		/**
+		 * 新增
 		 */
 		add(data?: any): Promise<any>;
 
 		/**
-		 * delete
+		 * 删除
 		 */
 		delete(data?: any): Promise<any>;
 
 		/**
-		 * info
+		 * 查询
 		 */
-		info(data?: any): Promise<TaskInfoEntity>;
-
-		/**
-		 * log
-		 */
-		log(data?: any): Promise<any>;
-
-		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
+		list(data?: any): Promise<DictTypeEntity[]>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
-			stop: string;
-			start: string;
 			page: string;
-			once: string;
+			update: string;
+			info: string;
 			add: string;
 			delete: string;
-			info: string;
-			log: string;
-			update: string;
+			list: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
-			stop: boolean;
-			start: boolean;
 			page: boolean;
-			once: boolean;
+			update: boolean;
+			info: boolean;
 			add: boolean;
 			delete: boolean;
-			info: boolean;
-			log: boolean;
-			update: boolean;
+			list: boolean;
 		};
 
 		request: Service["request"];
@@ -1080,27 +1438,27 @@ declare namespace Eps {
 
 	interface PluginInfo {
 		/**
-		 * list
+		 * 查询
 		 */
 		list(data?: any): Promise<PluginInfoEntity[]>;
 
 		/**
-		 * info
+		 * 修改
 		 */
-		info(data?: any): Promise<PluginInfoEntity>;
+		update(data?: any): Promise<any>;
 
 		/**
-		 * add
+		 * 安装插件
 		 */
-		add(data?: any): Promise<any>;
+		install(data: {
+			/** 文件  */
+			files: array;
+			/** 是否强制安装  */
+			force: boolean;
+		}): Promise<any>;
 
 		/**
-		 * delete
-		 */
-		delete(data?: any): Promise<any>;
-
-		/**
-		 * page
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -1109,26 +1467,31 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * install
+		 * 卸载插件
 		 */
-		install(data?: any): Promise<any>;
+		delete(data?: any): Promise<any>;
 
 		/**
-		 * update
+		 * 新增
 		 */
-		update(data?: any): Promise<any>;
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<PluginInfoEntity>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
 			list: string;
-			info: string;
-			add: string;
-			delete: string;
-			page: string;
-			install: string;
 			update: string;
+			install: string;
+			page: string;
+			delete: string;
+			add: string;
+			info: string;
 		};
 
 		/**
@@ -1136,81 +1499,226 @@ declare namespace Eps {
 		 */
 		_permission: {
 			list: boolean;
-			info: boolean;
-			add: boolean;
-			delete: boolean;
-			page: boolean;
-			install: boolean;
 			update: boolean;
+			install: boolean;
+			page: boolean;
+			delete: boolean;
+			add: boolean;
+			info: boolean;
 		};
 
 		request: Service["request"];
 	}
 
-	interface GoodsInfo {
+	interface TaskInfo {
 		/**
-		 * add
+		 * 执行一次
 		 */
-		add(data?: any): Promise<any>;
+		once(data?: any): Promise<any>;
 
 		/**
-		 * list
+		 * 分页
 		 */
-		list(data?: any): Promise<GoodsInfoEntity[]>;
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: TaskInfoEntity[];
+			[key: string]: any;
+		}>;
 
 		/**
-		 * data
+		 * 开始任务
 		 */
-		data(data?: any): Promise<any>;
+		start(data?: any): Promise<any>;
 
 		/**
-		 * info
+		 * 信息
 		 */
-		info(data?: any): Promise<GoodsInfoEntity>;
+		info(data: { id: integer }): Promise<TaskInfoEntity>;
 
 		/**
-		 * delete
+		 * 任务日志
 		 */
-		delete(data?: any): Promise<any>;
+		log(data?: any): Promise<any>;
 
 		/**
-		 * update
+		 * 修改
 		 */
 		update(data?: any): Promise<any>;
 
 		/**
-		 * page
+		 * 停止任务
 		 */
-		page(data?: any): Promise<{
-			pagination: { size: number; page: number; total: number; [key: string]: any };
-			list: GoodsInfoEntity[];
-			[key: string]: any;
-		}>;
+		stop(data?: any): Promise<any>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
-			add: string;
-			list: string;
-			data: string;
-			info: string;
-			delete: string;
-			update: string;
+			once: string;
 			page: string;
+			start: string;
+			info: string;
+			log: string;
+			update: string;
+			stop: string;
+			delete: string;
+			add: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
+			once: boolean;
+			page: boolean;
+			start: boolean;
+			info: boolean;
+			log: boolean;
+			update: boolean;
+			stop: boolean;
+			delete: boolean;
+			add: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface RecycleData {
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: RecycleDataEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<RecycleDataEntity>;
+
+		/**
+		 * 恢复数据
+		 */
+		restore(data?: any): Promise<any>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<RecycleDataEntity[]>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			page: string;
+			info: string;
+			restore: string;
+			add: string;
+			update: string;
+			list: string;
+			delete: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			page: boolean;
+			info: boolean;
+			restore: boolean;
+			add: boolean;
+			update: boolean;
+			list: boolean;
+			delete: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface UserInfo {
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: UserInfoEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<UserInfoEntity>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<UserInfoEntity[]>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			delete: string;
+			page: string;
+			info: string;
+			add: string;
+			list: string;
+			update: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			delete: boolean;
+			page: boolean;
+			info: boolean;
 			add: boolean;
 			list: boolean;
-			data: boolean;
-			info: boolean;
-			delete: boolean;
 			update: boolean;
-			page: boolean;
 		};
 
 		request: Service["request"];
@@ -1218,32 +1726,32 @@ declare namespace Eps {
 
 	interface GoodsCategory {
 		/**
-		 * update
-		 */
-		update(data?: any): Promise<any>;
-
-		/**
-		 * add
-		 */
-		add(data?: any): Promise<any>;
-
-		/**
-		 * list
-		 */
-		list(data?: any): Promise<GoodsCategoryEntity[]>;
-
-		/**
-		 * data
+		 * 获得商品分类数据
 		 */
 		data(data?: any): Promise<any>;
 
 		/**
-		 * info
+		 * 修改
 		 */
-		info(data?: any): Promise<GoodsCategoryEntity>;
+		update(data?: any): Promise<any>;
 
 		/**
-		 * page
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<GoodsCategoryEntity[]>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 分页
 		 */
 		page(data?: any): Promise<{
 			pagination: { size: number; page: number; total: number; [key: string]: any };
@@ -1252,34 +1760,103 @@ declare namespace Eps {
 		}>;
 
 		/**
-		 * delete
+		 * 信息
 		 */
-		delete(data?: any): Promise<any>;
+		info(data: { id: integer }): Promise<GoodsCategoryEntity>;
 
 		/**
 		 * 权限标识
 		 */
 		permission: {
+			data: string;
 			update: string;
 			add: string;
 			list: string;
-			data: string;
-			info: string;
-			page: string;
 			delete: string;
+			page: string;
+			info: string;
 		};
 
 		/**
 		 * 权限状态
 		 */
 		_permission: {
+			data: boolean;
 			update: boolean;
 			add: boolean;
 			list: boolean;
-			data: boolean;
+			delete: boolean;
+			page: boolean;
 			info: boolean;
+		};
+
+		request: Service["request"];
+	}
+
+	interface GoodsInfo {
+		/**
+		 * 获得商品数据
+		 */
+		data(data?: any): Promise<any>;
+
+		/**
+		 * 查询
+		 */
+		list(data?: any): Promise<GoodsInfoEntity[]>;
+
+		/**
+		 * 新增
+		 */
+		add(data?: any): Promise<any>;
+
+		/**
+		 * 修改
+		 */
+		update(data?: any): Promise<any>;
+
+		/**
+		 * 分页
+		 */
+		page(data?: any): Promise<{
+			pagination: { size: number; page: number; total: number; [key: string]: any };
+			list: GoodsInfoEntity[];
+			[key: string]: any;
+		}>;
+
+		/**
+		 * 删除
+		 */
+		delete(data?: any): Promise<any>;
+
+		/**
+		 * 信息
+		 */
+		info(data: { id: integer }): Promise<GoodsInfoEntity>;
+
+		/**
+		 * 权限标识
+		 */
+		permission: {
+			data: string;
+			list: string;
+			add: string;
+			update: string;
+			page: string;
+			delete: string;
+			info: string;
+		};
+
+		/**
+		 * 权限状态
+		 */
+		_permission: {
+			data: boolean;
+			list: boolean;
+			add: boolean;
+			update: boolean;
 			page: boolean;
 			delete: boolean;
+			info: boolean;
 		};
 
 		request: Service["request"];
@@ -1428,24 +2005,24 @@ declare namespace Eps {
 		}): Promise<any>;
 
 		base: {
-			comm: BaseComm;
 			sys: {
-				log: BaseSysLog;
-				department: BaseSysDepartment;
-				param: BaseSysParam;
 				menu: BaseSysMenu;
+				param: BaseSysParam;
+				department: BaseSysDepartment;
+				log: BaseSysLog;
 				role: BaseSysRole;
 				user: BaseSysUser;
 			};
+			comm: BaseComm;
 			open: BaseOpen;
 		};
+		space: { info: SpaceInfo; type: SpaceType };
+		dict: { info: DictInfo; type: DictType };
+		plugin: { info: PluginInfo };
+		task: { info: TaskInfo };
 		recycle: { data: RecycleData };
 		user: { info: UserInfo };
-		dict: { type: DictType; info: DictInfo };
-		space: { info: SpaceInfo; type: SpaceType };
-		task: { info: TaskInfo };
-		plugin: { info: PluginInfo };
-		goods: { info: GoodsInfo; category: GoodsCategory };
+		goods: { category: GoodsCategory; info: GoodsInfo };
 		chat: { message: ChatMessage; session: ChatSession };
 	};
 }

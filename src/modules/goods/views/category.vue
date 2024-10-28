@@ -24,6 +24,10 @@
 					</cl-row>
 
 					<cl-upsert ref="Upsert"/>
+					<cl-row>
+						<cl-flex1 />
+						<cl-pagination />
+					</cl-row>
 				</cl-crud>
 			</template>
 		</cl-view-group>
@@ -32,8 +36,8 @@
 
 <script lang="tsx" name="goods-category" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
-import { useCool } from "/@/cool";
-import { useViewGroup } from '/#/view';
+import { useCool } from "/src/cool";
+import { useViewGroup } from '/src/plugins/view';
 import { onMounted, reactive, ref, watch } from 'vue';
 import { Eps } from '@cool-vue/vite-plugin/types';
 
