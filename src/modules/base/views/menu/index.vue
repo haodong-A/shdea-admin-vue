@@ -400,7 +400,7 @@ function onData(list: Item[]) {
 				Table.value?.Table.store.states.lazyTreeNodeMap.value || {};
 
 			if (nodes[e.id!]) {
-				nodes[e.id!] = e.children!;
+				nodes[e.id!] = e.children || [];
 			}
 
 			if (!isEmpty(e.children)) {
@@ -408,7 +408,7 @@ function onData(list: Item[]) {
 				e._children = e.children;
 				delete e.children;
 
-				deep(e._children!);
+				deep(e._children || []);
 			}
 		});
 	};
