@@ -1,6 +1,14 @@
 <template>
 	<div class="cl-goods-category">
 		<cl-view-group ref="ViewGroup">
+			<template #item-name="{ item }">
+
+
+				<el-tag v-if="item.status === 0" type="warning" style="margin-right: 10px" title="产品以及前台不会出现此选项">关闭</el-tag>
+				<el-tag v-else type="success" style="margin-right: 10px"> 正常</el-tag>
+
+				{{ item.categoryName }}
+			</template>
 			<template #right>
 				<cl-crud ref="Crud">
 					<cl-row>
@@ -65,9 +73,9 @@ const { ViewGroup } = useViewGroup({
 		list.sort((a, b) => a.sortOrder - b.sortOrder)
 		parentCategory.value = list;
 		return list.map((e) => {
+			console.log(e.status);
 			return {
 				...e,
-				name: e.categoryName,
 			};
 		});
 	},

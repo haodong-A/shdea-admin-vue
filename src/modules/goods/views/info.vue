@@ -41,7 +41,6 @@ const options = reactive({
 	status: [
 		{ label: "下架", value: 0 },
 		{ label: "上架", value: 1 },
-		{ label: "预售", value: 2 }
 	]
 });
 
@@ -94,7 +93,6 @@ const Table = useTable({
 	columns: [
 		{ type: "selection" },
 		{ label: "编号", prop: "goodsId", minWidth: 140 },
-		{ label: "标题", prop: "title", minWidth: 140 },
 		{
 			label: "示例图",
 			prop: "cover",
@@ -105,21 +103,26 @@ const Table = useTable({
 		},
 		{ label: "分类", prop: "category", dict: [], minWidth: 120 },
 		{ label: "品牌", prop: "brand", dict: [], minWidth: 120 },
-		{ label: "状态", prop: "status", dict: options.status, minWidth: 120 },
+		{
+			label: "状态",
+			prop: "status",
+			dict: options.status,
+			minWidth: 120
+		},
 		{ label: "浏览次数", prop: "viewCount", minWidth: 140 },
 		{ label: "收藏次数", prop: "favoriteCount", minWidth: 140 },
 		{
 			label: "更新时间",
 			prop: "updateTime",
 			minWidth: 170,
-			sortable: "custom",
+			sortable: true,
 			component: { name: "cl-date-text" }
 		},
 		{
 			label: "创建时间",
 			prop: "createTime",
 			minWidth: 170,
-			sortable: "desc",
+			sortable: true,
 			component: { name: "cl-date-text" }
 		},
 		{ type: "op", buttons: ["edit", "delete"] }
