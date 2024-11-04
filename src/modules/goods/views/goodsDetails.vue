@@ -3,15 +3,20 @@ import { onMounted, ref } from 'vue';
 	import ClForm from '/~/crud/src/components/form';
 	import { useForm } from '@cool-vue/crud';
 import { service } from '/@/cool';
+import MultipleInput from '/$/goods/components/multiple-input.vue';
 
 	const form = useForm()
 	const initLoading = ref(true);
 
 	const categoryOptions = ref([]);
 
+	//参数字典
+	const paramsType = ref();
 	onMounted(async () => {
 		//初始化
 		categoryOptions.value = await service.goods.category.allLevel();
+		paramsType.value = await service.dict.type.list();
+
 		initLoading.value = false;
 
 		form.value?.open({
@@ -29,8 +34,8 @@ import { service } from '/@/cool';
 								value: 'base' // 唯一标识
 							},
 							{
-								label: '特殊属性',
-								value: 'spec'
+								label: '基本参数',
+								value: 'param'
 							}
 						]
 					}
@@ -81,7 +86,7 @@ import { service } from '/@/cool';
 				{
 					group: 'base', // 标识
 					label: '品牌',
-					prop: 'category',
+					prop: 'brand',
 					span:16,
 					component: {
 						name: 'el-input',
@@ -115,12 +120,10 @@ import { service } from '/@/cool';
 
 				// 其他信息 group = other
 				{
-					group: 'spec', // 标识
-					label: '身份证',
-					prop: 'idcard',
-					required: true,
+					group: 'param', // 标识
+					prop: 'specificAttributes',
 					component: {
-						name: 'el-input'
+						name: 'slot-specific'
 					}
 				},
 
@@ -139,7 +142,11 @@ import { service } from '/@/cool';
 <template>
 <div style=" width: 100%; height: 100%" v-loading="initLoading" element-loading-text="初始化中...">
 
-	<cl-form ref="form" :inner="true"  />
+	<cl-form ref="form" :inner="true">
+		<template #slot-specific="{ scope }">
+			<multiple-input v-model="scope.specificAttributes" :param-type="paramsType" />
+		</template>
+	</cl-form>
 </div>
 </template>
 
