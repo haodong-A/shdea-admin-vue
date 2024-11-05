@@ -205,7 +205,7 @@ export function parseExtensionComponent(vnode: any) {
 							);
 						case "el-checkbox-group":
 							return (
-								<el-checkbox key={i} label={value} {...e.props}>
+								<el-checkbox key={i} value={value} {...e.props}>
 									{label}
 								</el-checkbox>
 							);
