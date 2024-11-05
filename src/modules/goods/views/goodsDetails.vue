@@ -65,7 +65,7 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 					group: 'base', // 标识
 					label: '示例图',
 					prop: 'cover',
-					required: true,
+					// required: true,
 					component: {
 						name: 'cl-upload'
 					}
@@ -131,12 +131,17 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 			on: {
 				//【提示】当第一组验证通过后，会自动切换到下一组展示，直到全部通过才可提交
 				submit(data, { close }) {
-					close();
+					console.log(data);
 				}
 			}
 		});
 
 	})
+const mock = `{
+    "size": "Json.CN",
+    "param_type": 1,
+    "voltage": "20v"
+}`
 </script>
 
 <template>
@@ -144,7 +149,7 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 
 	<cl-form ref="form" :inner="true">
 		<template #slot-specific="{ scope }">
-			<multiple-input v-model="scope.specificAttributes" :param-type="paramsType" />
+			<multiple-input v-model="mock" :param-type="paramsType" />
 		</template>
 	</cl-form>
 </div>
