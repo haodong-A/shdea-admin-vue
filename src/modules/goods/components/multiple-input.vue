@@ -1,9 +1,9 @@
 <script setup lang="ts">
 
-import { ref, watch, watchEffect } from 'vue';
+import { onMounted, ref, watch, watchEffect } from 'vue';
 import { service } from '/@/cool';
 
-
+import { Delete } from '@element-plus/icons-vue';
 //选中的param-type
 const selectedVal = ref();
 
@@ -13,7 +13,12 @@ const fields = ref<any []>([]);
 //字段值
 const fieldValues = ref<any>({});
 
+const emit = defineEmits(["update:modelValue", "change"]);
 
+//是否已经初始化
+const inited = ref(false);
+
+onMounted(()=> {})
 //加载中
 const loading = ref(false)
 
@@ -30,20 +35,24 @@ const props = defineProps({
 watchEffect(async ()=> {
 	if (selectedVal.value) {
 		loading.value = true;
-		await service.dict.info.list({ id: selectedVal.value }).then((res) => {
+		fieldValues.value.param_type = selectedVal.value;
+		await service.dict.info.list({ typeId: selectedVal.value }).then((res) => {
 			fields.value = res.map((item)=>({ name: item.name, value: item.value }))
 		}).finally(()=> { loading.value = false })
 	}
 })
 
-watch(() => props.modelValue,(value) => {
 
-	if (value) {
+
+watch(() => props.modelValue,(value) => {
+	//仅限未初始化，才需要执行
+	if (value && !inited.value) {
+		inited.value = true;
 		try {
-			//解析value
+			//解析value, 为了初始化而执行
 			fieldValues.value = JSON.parse(value)
 			if(fieldValues.value.param_type){
-				selectedVal.value = fieldValues.value.param_type
+				selectedVal.value = fieldValues.value.param_type;
 			}
 		} catch (e) {
 			console.log(e);
@@ -56,8 +65,8 @@ watch(() => props.modelValue,(value) => {
 
 
 watch(() => fieldValues, ()=> {
-	console.log(fieldValues.value);
-}, { deep: true })
+	emit('update:modelValue', JSON.stringify(fieldValues.value));
+}, { deep: true, immediate: true })
 
 
 /**
@@ -91,16 +100,19 @@ function removeField(value: string){
 			/>
 		</el-select>
 
-		<div class="custom-input-container" v-loading="loading">
+		<div class="custom-input-container" v-loading="loading" element-loading-text="加载中..." >
 			<el-form label-width="80px">
 				<template v-for="item in fields" :key="item.value" >
 					<el-col :span="12" >
 						<el-form-item :label="item.name">
 							<el-input v-model="fieldValues[item.value]" :placeholder="`请输入${item.name}`">
 								<template #append>
-									<el-button @click="removeField(item.value)"> 删除 </el-button>
+									<el-icon title="删除" style="cursor: pointer" @click="removeField(item.value)">
+										<delete />
+									</el-icon>
 								</template>
 							</el-input>
+
 
 						</el-form-item>
 					</el-col>
@@ -116,5 +128,6 @@ function removeField(value: string){
 	width: 100%;
 	height: 300px;
 	margin-top: 10px;
+	padding: 0 10px ;
 }
 </style>

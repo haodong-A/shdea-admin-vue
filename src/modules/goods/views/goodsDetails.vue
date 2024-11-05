@@ -34,7 +34,7 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 								value: 'base' // 唯一标识
 							},
 							{
-								label: '基本参数',
+								label: '商品参数',
 								value: 'param'
 							}
 						]
@@ -117,21 +117,85 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 					}
 				},
 
-
-				// 其他信息 group = other
 				{
-					group: 'param', // 标识
-					prop: 'specificAttributes',
+					group: 'param',
 					component: {
-						name: 'slot-specific'
-					}
+						name: 'cl-form-card',
+						props: {
+							// 标题
+							label: '基本参数 - (特殊属性)',
+							// 是否展开，默认 true
+							expand: true
+						}
+					},
+					children: [
+						{
+							// 标识
+							prop: 'specificAttributes',
+							component: {
+								name: 'slot-specific'
+							}
+						},
+
+					]
+
 				},
+				{
+					group: 'param',
+					component: {
+						name: 'cl-form-card',
+						props: {
+							// 标题
+							label: '其他参数 - (其他属性)',
+							// 是否展开，默认 true
+							expand: true
+						}
+					},
+					children: [
+						{
+							// 标识
+							prop: 'otherAttributes',
+							component: {
+								name: 'slot-other'
+							}
+						},
+
+					]
+
+				},
+
+				{
+					group: 'param',
+					component: {
+						name: 'cl-form-card',
+						props: {
+							// 标题
+							label: '交付时间',
+							// 是否展开，默认 true
+							expand: true
+						}
+					},
+					children: [
+						{
+							// 标识
+							prop: 'delivery',
+							component: {
+								name: 'slot-delivery'
+							}
+						},
+
+					]
+
+				},
+				// 其他信息 group = other
+
 
 			],
 			on: {
 				//【提示】当第一组验证通过后，会自动切换到下一组展示，直到全部通过才可提交
-				submit(data, { close }) {
+				submit(data, { done, close }) {
 					console.log(data);
+					done();
 				}
 			}
 		});
@@ -145,14 +209,25 @@ const mock = `{
 </script>
 
 <template>
-<div style=" width: 100%; height: 100%" v-loading="initLoading" element-loading-text="初始化中...">
+	<el-scrollbar  v-loading="initLoading" element-loading-text="初始化中..." style="padding: 10px">
 
-	<cl-form ref="form" :inner="true">
-		<template #slot-specific="{ scope }">
-			<multiple-input v-model="mock" :param-type="paramsType" />
-		</template>
-	</cl-form>
-</div>
+		<div style="height: 100%; width: 100%;">
+		<!---->
+			<cl-form ref="form" :inner="true">
+				<template #slot-specific="{ scope }">
+					<multiple-input v-model="scope.specificAttributes" :param-type="paramsType" />
+				</template>
+
+				<template #slot-other="{ scope }">
+					<multiple-input v-model="scope.otherAttributes" :param-type="paramsType" />
+				</template>
+
+				<template #slot-delivery="{ scope }">
+					<multiple-input v-model="scope.delivery" :param-type="paramsType" />
+				</template>
+			</cl-form>
+		</div>
+	</el-scrollbar>
 </template>
 
 <style scoped lang="scss">
