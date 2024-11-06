@@ -14,6 +14,16 @@ export function getNames(value: any) {
 	return Object.getOwnPropertyNames(value.constructor.prototype);
 }
 
+//深度合并
+export function deepMerge(a: any, b: any) {
+	let k;
+	for (k in b) {
+		a[k] =
+			a[k] && a[k].toString() === "[object Object]" ? deepMerge(a[k], b[k]) : (a[k] = b[k]);
+	}
+	return a;
+}
+
 // 获取地址栏参数
 export function getUrlParam(name: string): string | null {
 	const reg = new RegExp('(^|&)' + name + '=([^&]*)(&|$)');
