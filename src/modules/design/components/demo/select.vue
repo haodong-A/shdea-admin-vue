@@ -2,6 +2,7 @@
 	<div class="demo-select">
 		<div class="item" v-for="(item, index) in Form?.form.options" :key="index">
 			<el-input v-model="item.label" :placeholder="`请输入选项${index + 1}`" />
+			<el-input v-model="item.value" :placeholder="`请输入值${index + 1}`" />
 			<el-icon @click="add(index)"><circle-plus /></el-icon>
 			<el-icon @click="del(index)"><remove /></el-icon>
 		</div>

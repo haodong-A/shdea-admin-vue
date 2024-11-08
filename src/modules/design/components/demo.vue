@@ -61,7 +61,24 @@ const demo: Dp.DemoItem[] = [
 	},
 	{
 		label: "多行文字",
-		name: "textarea"
+		name: "textarea",
+		config: {
+			items: [
+				{
+					label: '字数限制',
+					renderLabel: (
+						<p class="form-label">
+							字数 <span>最多200字</span>
+						</p>
+					),
+					prop: 'maxlength',
+					value: 200,
+					component: {
+						name: "el-input-number"
+					}
+				}
+			]
+		}
 	},
 	{
 		label: "单项选择",
