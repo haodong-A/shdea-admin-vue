@@ -4,6 +4,7 @@ import { onMounted, ref } from 'vue';
 	import { useForm } from '@cool-vue/crud';
 import { service } from '/@/cool';
 import MultipleInput from '/$/goods/components/multiple-input.vue';
+import ParamInput from '/$/goods/components/param-input.vue';
 
 	const form = useForm()
 	const initLoading = ref(true);
@@ -120,73 +121,10 @@ import MultipleInput from '/$/goods/components/multiple-input.vue';
 				{
 					group: 'param',
 					component: {
-						name: 'cl-form-card',
-						props: {
-							// 标题
-							label: '基本参数 - (特殊属性)',
-							// 是否展开，默认 true
-							expand: true
-						}
+						name: 'slot-params',
 					},
-					children: [
-						{
-							// 标识
-							prop: 'specificAttributes',
-							component: {
-								name: 'slot-specific'
-							}
-						},
-
-					]
-
-				},
-				{
-					group: 'param',
-					component: {
-						name: 'cl-form-card',
-						props: {
-							// 标题
-							label: '其他参数 - (其他属性)',
-							// 是否展开，默认 true
-							expand: true
-						}
-					},
-					children: [
-						{
-							// 标识
-							prop: 'otherAttributes',
-							component: {
-								name: 'slot-other'
-							}
-						},
-
-					]
-
 				},
 
-				{
-					group: 'param',
-					component: {
-						name: 'cl-form-card',
-						props: {
-							// 标题
-							label: '交付时间',
-							// 是否展开，默认 true
-							expand: true
-						}
-					},
-					children: [
-						{
-							// 标识
-							prop: 'delivery',
-							component: {
-								name: 'slot-delivery'
-							}
-						},
-
-					]
-
-				},
 				// 其他信息 group = other
 
 
@@ -214,17 +152,10 @@ const mock = `{
 		<div style="height: 100%; width: 100%;">
 		<!---->
 			<cl-form ref="form" :inner="true">
-				<template #slot-specific="{ scope }">
-					<multiple-input v-model="scope.specificAttributes" :param-type="paramsType" />
+				<template #slot-params="{ scope }">
+					<param-input v-model="scope.params"  />
 				</template>
 
-				<template #slot-other="{ scope }">
-					<multiple-input v-model="scope.otherAttributes" :param-type="paramsType" />
-				</template>
-
-				<template #slot-delivery="{ scope }">
-					<multiple-input v-model="scope.delivery" :param-type="paramsType" />
-				</template>
 			</cl-form>
 		</div>
 	</el-scrollbar>

@@ -1,5 +1,14 @@
 <template>
 	<cl-view-group ref="ViewGroup">
+		<template #item-name="{ item }">
+			<el-tag v-if="item.status" type="success"> 正常 </el-tag>
+			<el-tooltip v-else content="表单中不会显示该数据" placement="top" show-after="1000">
+				<el-tag  type="danger"> 禁用 </el-tag>
+			</el-tooltip>
+			{{ item.status }}
+			<span style="margin-left: 10px">{{ item.name }}</span>
+
+		</template>
 
 		<template #right>
 			<cl-crud ref="Crud">
@@ -50,6 +59,10 @@ const { service } = useCool();
 
 // 选项
 const options = reactive({
+	status: [
+		{ label: "禁用", value: 0, type: "danger" },
+		{ label: "正常", value: 1, type: "success" }
+	],
 	required: [
 		{ label: "非必填", value: 0, type: "danger" },
 		{ label: "必填", value: 1, type: "success" }
@@ -58,6 +71,7 @@ const options = reactive({
 		{ label: "字符串", value: 0 },
 		{ label: "文本", value: 1 },
 		{ label: "日期", value: 2 },
+		{ label: "数字", value: 3 }
 	]
 });
 
@@ -95,6 +109,24 @@ const { ViewGroup } = useViewGroup({
 						},
 					},
 					required: true,
+				},
+				{
+					label: "排序",
+					prop: "sort",
+					value: 0,
+					component: {
+						name: "el-input-number",
+
+					},
+				},
+				{
+					label: "状态",
+					prop: "status",
+					value: 1,
+					component: {
+						name: "el-radio-group",
+						options: options.status
+					},
 				},
 			],
 		};
