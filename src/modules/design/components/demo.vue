@@ -57,7 +57,23 @@ for (const i in files) {
 const demo: Dp.DemoItem[] = [
 	{
 		label: "单行文字",
-		name: "text"
+		name: "text",
+		config: {
+			items: [
+				{
+					label: '名称',
+					renderLabel: (
+						<p class="form-label">
+							名称 <span> 展示在前台的名称，最好英文</span>
+						</p>
+					),
+					prop: 'fieldName',
+					component: {
+						name: "el-input"
+					}
+				}
+			]
+		}
 	},
 	{
 		label: "多行文字",
