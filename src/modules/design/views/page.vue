@@ -1,7 +1,11 @@
 <template>
 	<div class="form">
 		<div class="container">
-			<dp :ref="setRefs('dp')" />
+			<el-drawer v-model="openDrawer" size="100%">
+
+				<dp :ref="setRefs('dp')" />
+			</el-drawer>
+
 		</div>
 
 		<div class="footer">
@@ -18,9 +22,12 @@
 import { useCool } from "/@/cool";
 import { ElMessage, ElMessageBox } from "element-plus";
 import Dp from "../components/index.vue";
+import { ref } from 'vue';
 
 const { refs, setRefs } = useCool();
 
+
+const openDrawer = ref(true);
 function save() {
 	refs.dp.saveDraft();
 	ElMessage.success("保存草稿成功");
