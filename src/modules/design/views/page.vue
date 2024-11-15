@@ -1,5 +1,5 @@
 <template>
-	<div class="form">
+<!--	<div class="form">
 		<div class="container">
 			<el-drawer v-model="openDrawer" size="100%">
 
@@ -15,14 +15,91 @@
 		</div>
 
 		<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
-	</div>
+	</div>-->
+
+
+		<cl-crud ref="Crud">
+			<cl-row>
+				<!-- 刷新按钮 -->
+				<cl-refresh-btn />
+				<!-- 新增按钮 -->
+				<el-button type="primary" v-permission="service.goods.field.permission.add" @click="openDrawer = true"> 新增 </el-button>
+				<!-- 删除按钮 -->
+				<cl-multi-delete-btn />
+
+				<cl-flex1 />
+				<!-- 关键字搜索 -->
+
+				<cl-search-key placeholder="搜索关键字" />
+			</cl-row>
+
+			<cl-row>
+				<cl-table ref="Table"></cl-table>
+			</cl-row>
+
+		</cl-crud>
+
 </template>
 
 <script lang="ts" setup>
-import { useCool } from "/@/cool";
+import { service, useCool } from '/@/cool';
 import { ElMessage, ElMessageBox } from "element-plus";
 import Dp from "../components/index.vue";
 import { ref } from 'vue';
+import { useCrud, useTable } from '@cool-vue/crud';
+
+
+const Crud = useCrud({
+	service: service.goods.field,
+}, (app) => {
+	app.refresh();
+})
+
+const Table = useTable({
+	contextMenu: ["refresh", "check", "order-desc", "order-asc"],
+	columns: [
+		{
+			type: "selection",
+		},
+		{
+			prop: 'name',
+			label: '模板名称',
+			width: 200
+		},
+		{
+
+			props: 'template',
+			label: '模板代码',
+			component: {
+				name: 'cl-code-json',
+				props: {
+					popover: true
+				}
+			}
+		},
+		{
+			props: 'templateV',
+			label: '模板版本',
+			width: 200
+		},
+		{
+			label: "状态",
+			prop: "status",
+			dict: [
+				{
+					label: "开启",
+					value: 1,
+					type: "success",
+				},
+				{
+					label: "关闭",
+					value: 0,
+					type: "danger",
+				},
+			],
+		},
+	]
+})
 
 const { refs, setRefs } = useCool();
 
