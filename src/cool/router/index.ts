@@ -10,7 +10,7 @@ import { type Router, storage, module } from '/@/cool';
 import { isArray } from 'lodash-es';
 import { useBase } from '/$/base';
 import { Loading } from '../utils';
-import { config } from '/@/config';
+import { config, isDev } from '/@/config';
 
 // 基本路径
 const baseUrl = import.meta.env.BASE_URL;
@@ -59,7 +59,9 @@ router.onError((err: Error) => {
 
 		// 动态加载组件错误，刷新页面
 		if (err.message?.includes('Failed to fetch dynamically imported module')) {
-			window.location.reload();
+			if (!isDev) {
+				window.location.reload();
+			}
 		}
 
 		setTimeout(() => {
