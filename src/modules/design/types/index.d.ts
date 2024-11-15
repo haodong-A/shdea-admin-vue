@@ -41,3 +41,27 @@ export declare namespace Dp {
 		scrollToBottom(): void;
 	}
 }
+
+//字段配置
+export declare namespace Fo{
+	interface FieldItem {
+		id: string | number;
+		name: 'text' | 'textarea' | 'radio' | 'checkbox' | 'number';
+		label: string;
+		isGroup?: boolean;
+		props: FieldProps
+	}
+
+	interface FieldProps {
+		name: 'text' | 'textarea' | 'radio' | 'checkbox' | 'number';
+		label: string;
+		placeholder?: string;
+		//参数名称 建议英文，前台名称
+		paramName: string;
+		options?: { label: string; value: string | number }[];
+		required?: boolean;
+		//格式化，目前仅用于日期才会出现
+		format?: string;
+	}
+
+}

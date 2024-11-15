@@ -454,7 +454,7 @@ const demo: Dp.DemoItem[] = [
 			]
 		}
 	},
-	{
+	/*{
 		label: "金钱",
 		name: "amount",
 		config: {
@@ -502,16 +502,16 @@ const demo: Dp.DemoItem[] = [
 				}
 			]
 		}
-	},
-	{
+	},*/
+	/*{
 		label: "地址",
 		name: "address",
 		getType: "auto",
 		config: {
 			defs: ["title"]
 		}
-	},
-	{
+	},*/
+	/*{
 		label: "附件",
 		name: "file",
 		component: {
@@ -534,7 +534,7 @@ const demo: Dp.DemoItem[] = [
 				}
 			]
 		}
-	},
+	},*/
 	{
 		label: "组合",
 		name: "group",
@@ -548,7 +548,7 @@ const demo: Dp.DemoItem[] = [
 			defs: ["title"]
 		}
 	},
-	{
+	/*{
 		label: "图片",
 		name: "pic",
 		component: {
@@ -571,7 +571,7 @@ const demo: Dp.DemoItem[] = [
 				},
 			]
 		}
-	}
+	}*/
 ];
 
 function getDemo(name: string, data?: any) {
