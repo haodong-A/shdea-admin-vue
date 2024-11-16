@@ -58,40 +58,12 @@ const demo: Dp.DemoItem[] = [
 	{
 		label: "单行文字",
 		name: "text",
-		config: {
-			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							 参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				}
-			]
-		}
 	},
 	{
 		label: "多行文字",
 		name: "textarea",
 		config: {
 			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
 				{
 					label: '字数限制',
 					renderLabel: (
@@ -122,18 +94,6 @@ const demo: Dp.DemoItem[] = [
 		config: {
 			items: [
 				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
-				{
 					label: "选项",
 					renderLabel: (
 						<p class="form-label">
@@ -160,30 +120,17 @@ const demo: Dp.DemoItem[] = [
 		},
 		config: {
 			items: [
-				{
-				label: '参数名称',
-				prop: 'paramName',
+			{
+				label: "选项",
 				renderLabel: (
 					<p class="form-label">
-						参数名称 <span>展示在页面的参数名称，建议用英文</span>
+						选项 <span>最多200项，每项最多50个字</span>
 					</p>
 				),
 				component: {
-					name: 'el-input',
+					name: "demo-select"
 				}
-			},
-
-				{
-					label: "选项",
-					renderLabel: (
-						<p class="form-label">
-							选项 <span>最多200项，每项最多50个字</span>
-						</p>
-					),
-					component: {
-						name: "demo-select"
-					}
-				}
+			}
 			]
 		}
 	},
@@ -198,19 +145,8 @@ const demo: Dp.DemoItem[] = [
 			}
 		},
 		config: {
+
 			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
 				{
 					label: "日期",
 					prop: "format",
@@ -254,18 +190,6 @@ const demo: Dp.DemoItem[] = [
 		config: {
 			defs: [],
 			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
 				{
 					label: "标题",
 					renderLabel: (
@@ -407,18 +331,6 @@ const demo: Dp.DemoItem[] = [
 		config: {
 			items: [
 				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
-				{
 					label: "数值类型",
 					prop: "type",
 					value: "int",
@@ -545,7 +457,7 @@ const demo: Dp.DemoItem[] = [
 			}
 		},
 		config: {
-			defs: ["title"]
+			defs: ["title", 'paramName']
 		}
 	},
 	/*{
@@ -884,7 +796,7 @@ function parse(item: Dp.DemoItem) {
 		}
 
 		if (!d.config.defs) {
-			d.config.defs = ["title", "placeholder"];
+			d.config.defs = ["title", "placeholder", "paramName"];
 		}
 
 		d.config.title = d.label;
@@ -949,6 +861,25 @@ function parse(item: Dp.DemoItem) {
 					}
 				}
 			});
+		}
+		if (d.config.defs.includes("paramName")) {
+			items.unshift({
+				label: '参数名称',
+				prop: 'paramName',
+				renderLabel: (
+					<p class="form-label">
+						参数名称 <span>展示在页面的参数名称，建议用英文</span>
+					</p>
+				),
+				component: {
+					name: 'el-input',
+					props: {
+						clearable: true,
+						placeholder: "请输入参数名称",
+						disabled: d.config.disabled
+					}
+				}
+				});
 		}
 
 		// 占位符

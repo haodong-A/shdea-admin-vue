@@ -30,11 +30,12 @@
 							<el-button @click="clear">清空</el-button>
 							<el-button type="info" @click="save">保存草稿</el-button>
 							<el-button type="success" @click="create">生成代码</el-button>
-							<el-button type="success" @click="open">生成代码</el-button>
+							<el-button type="primary" @click="open">预览</el-button>
 						</div>
 
-						<el-dialog v-model="openInputPreview" title="输入框预览" destroy-on-close>
+						<el-dialog v-model="openInputPreview" title="预览" destroy-on-close >
 							<cl-parse-input :fieldOptions="refs.dp.getData()"/>
+
 						</el-dialog>
 						<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
 					</div>

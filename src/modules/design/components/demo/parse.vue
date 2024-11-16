@@ -15,7 +15,7 @@ const props = defineProps({
 	}
 });
 
-const values = reactive<any>({})
+const values = ref<any>({})
 
 function getComponent(name: string) {
 	switch (name) {
@@ -24,29 +24,24 @@ function getComponent(name: string) {
 	}
 }
 
-const fieldsRef = ref<any>();
-
-watchEffect(()=>{
-	console.log(props.fieldOptions);
-
-
-})
 
 const Form = useForm();
 
 function parse () {
 	if(isArray(props.fieldOptions)){
 		const fields = toRaw(props.fieldOptions);
+		console.log(fields);
 		return fields.map((field: any) => {
 			return {
 				label: field?.label,
 				prop: field?.props.paramName,
-				required: field?.required,
+				required: field?.props.required,
+				span: 24,
 				component: {
 					name: getComponent(field?.name),
 					props: {
 						type: field?.name,
-						placeholder: field?.props.placeholder,
+						... field?.props,
 					},
 					options: field?.props.options,
 				},
@@ -55,22 +50,21 @@ function parse () {
 	}
 }
 onMounted(()=>{
-
-	nextTick(()=>{
-		console.log(parse());
-			Form.value?.open({
-				items: parse(),
-			})
+	console.log(parse());
+	Form.value?.open({
+		op: {
+			hidden: true
+		},
+		items: parse(),
 	})
-
 })
 
 
 </script>
 
 <template>
-<div>
-	<cl-form ref="Form" :inline="true" inner>
+<div style="width: 100%">
+	<cl-form ref="Form"  inner>
 
 	</cl-form>
 </div>

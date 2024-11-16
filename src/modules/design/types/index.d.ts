@@ -42,6 +42,7 @@ export declare namespace Dp {
 	}
 }
 
+
 //字段配置
 export declare namespace Fo{
 	interface FieldItem {
