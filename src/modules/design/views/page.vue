@@ -1,22 +1,5 @@
 <template>
-<!--	<div class="form">
-		<div class="container">
-			<el-drawer v-model="openDrawer" size="100%">
-
-				<dp :ref="setRefs('dp')" />
-			</el-drawer>
-
-		</div>
-
-		<div class="footer">
-			<el-button @click="clear">清空</el-button>
-			<el-button type="info" @click="save">保存草稿</el-button>
-			<el-button type="success" @click="create">生成代码</el-button>
-		</div>
-
-		<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
-	</div>-->
-
+<!---->
 
 		<cl-crud ref="Crud">
 			<cl-row>
@@ -37,6 +20,25 @@
 				<cl-table ref="Table"></cl-table>
 			</cl-row>
 
+				<el-drawer v-model="openDrawer" size="100%" title="编辑模板">
+					<div class="form">
+						<div class="container">
+							<dp :ref="setRefs('dp')" />
+						</div>
+
+						<div class="footer">
+							<el-button @click="clear">清空</el-button>
+							<el-button type="info" @click="save">保存草稿</el-button>
+							<el-button type="success" @click="create">生成代码</el-button>
+							<el-button type="success" @click="open">生成代码</el-button>
+						</div>
+
+						<el-dialog v-model="openInputPreview" title="输入框预览" destroy-on-close>
+							<cl-parse-input :fieldOptions="refs.dp.getData()"/>
+						</el-dialog>
+						<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
+					</div>
+				</el-drawer>
 		</cl-crud>
 
 </template>
@@ -104,12 +106,18 @@ const Table = useTable({
 const { refs, setRefs } = useCool();
 
 
-const openDrawer = ref(true);
+const openDrawer = ref(false);
+
+const openInputPreview = ref(false);
 function save() {
 	refs.dp.saveDraft();
 	ElMessage.success("保存草稿成功");
 }
 
+//打开代码预览
+function open() {
+	openInputPreview.value=true;
+}
 function create() {
 	refs.preview.open(refs.dp.getData());
 }
@@ -129,7 +137,7 @@ function clear() {
 .form {
 	background-color: #fff;
 	position: relative;
-	min-width: 1300px;
+	min-width: 1100px;
 	height: 100%;
 	overflow: hidden;
 
