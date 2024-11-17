@@ -184,24 +184,27 @@ function get(prop: string) {
 function getData() {
 	function deep(arr: any[]): any {
 		return arr.map((e) => {
+			console.log(e);
 			const isGroup = e.component.name == "demo-group" || e.name == "group";
 
 			const d = {
 				id: e.id,
 				name: e.name,
-				label: e.component.props.label
+				label: e.component.props.label,
+
 			};
 
 			if (isGroup) {
 				return {
 					...d,
 					isGroup,
+					prop: e.component.props.paramName || e.component.props.label,
 					children: deep(e.component.props.children || [])
 				};
 			} else {
 				return {
 					...d,
-					prop: e.prop,
+					prop: e.component.props.paramName || e.component.props.label,
 					name: e.name,
 					getType: e.getType,
 					props: e.component.props
