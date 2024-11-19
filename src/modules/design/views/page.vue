@@ -65,6 +65,7 @@ const Crud = useCrud({
 
 const current = ref<'add' | 'edit' | 'info'>('add');
 
+const selectorId = ref<any>()
 const Upsert = useUpsert({
 	items: [
 		{
@@ -140,6 +141,7 @@ const Table = useTable({
 					current.value = 'edit';
 					done();
 					openDrawer.value = true;
+					Upsert.value?.setForm('id', row.id)
 					nextTick(()=> {
 
 						console.log(JSON.parse(row.template ));
