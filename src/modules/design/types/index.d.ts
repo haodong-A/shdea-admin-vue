@@ -65,4 +65,9 @@ export declare namespace Fo{
 		format?: string;
 	}
 
+	interface FieldModel {
+		key: string,
+		children?: FieldModel[];
+	}
+
 }

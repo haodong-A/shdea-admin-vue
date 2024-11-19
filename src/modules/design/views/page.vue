@@ -6,7 +6,7 @@
 				<!-- 刷新按钮 -->
 				<cl-refresh-btn />
 				<!-- 新增按钮 -->
-				<el-button type="primary" v-permission="service.goods.field.permission.add" @click="openDrawer = true"> 新增 </el-button>
+				<el-button type="primary" v-permission="service.goods.field.permission.add" @click="() => {openDrawer = true; current = 'add'}"> 新增 </el-button>
 				<!-- 删除按钮 -->
 				<cl-multi-delete-btn />
 
@@ -31,14 +31,14 @@
 							<el-button type="info" @click="save">保存草稿</el-button>
 							<el-button type="success" @click="create">生成代码</el-button>
 							<el-button type="primary" @click="open">预览</el-button>
-							<el-button type="success" @click="open">提交</el-button>
+							<el-button type="success" @click="Upsert?.[current]">提交</el-button>
 						</div>
 
 						<el-dialog v-model="openInputPreview" title="预览" destroy-on-close >
 							<cl-parse-input :fieldOptions="refs.dp.getData()"/>
 
 						</el-dialog>
-
+						<cl-upsert ref="Upsert"/>
 
 						<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
 					</div>
@@ -47,12 +47,13 @@
 
 </template>
 
-<script lang="ts" setup>
+<script lang="tsx" setup>
 import { service, useCool } from '/@/cool';
-import { ElMessage, ElMessageBox } from "element-plus";
-import Dp from "../components/index.vue";
-import { ref } from 'vue';
-import { useCrud, useTable } from '@cool-vue/crud';
+import { ElMessage, ElMessageBox } from 'element-plus';
+import Dp from '../components/index.vue';
+import { nextTick, ref } from 'vue';
+import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
+import { Fo } from '/$/design/types';
 
 
 const Crud = useCrud({
@@ -61,14 +62,95 @@ const Crud = useCrud({
 	app.refresh();
 })
 
-const Table = useTable({
-	contextMenu: ["refresh", "check", "order-desc", "order-asc", {
-		label: '编辑',
-		callback(item,done) {
-			console.log(item);
-			done();
+
+const current = ref<'add' | 'edit' | 'info'>('add');
+
+const Upsert = useUpsert({
+	items: [
+		{
+			label: '模板名称',
+			prop: 'name',
+			required: true,
+			component: {
+				name: 'el-input',
+			}
 		},
-	}],
+		{
+			label: '状态',
+			prop: 'status',
+			renderLabel: <el-tooltip
+				content="如果开启，则会下线已启用的模板"
+				placement="bottom">
+				状态
+			</el-tooltip>,
+			value: 0,
+			required: true,
+			component: {
+				name: 'el-radio-group',
+				options: [
+					{
+						label: '开启',
+						value: 1
+					},
+					{
+						label: '关闭',
+						value: 0,
+					}
+				],
+			}
+		}
+	],
+	onSubmit(data,  { next, done, close }) {
+		const template = refs.dp.getData();
+		const templateV = new Date().getTime().toString();
+		const model = buildModel(template);
+
+		next({ ...data, template, templateV, model })
+
+
+	},
+});
+
+//搭建字段模块
+function buildModel(template: any[]) {
+
+	return template.map((item): Fo.FieldModel => {
+		if (!item.children || !item.children.length) {
+			return {
+				key: item.prop,
+			}
+		}
+		return {
+			key: item.prop,
+			children: buildModel(item.children)
+		}
+	})
+
+}
+
+const Table = useTable({
+	contextMenu: ["refresh", "check", "order-desc", "order-asc",
+		(row) => {
+			// 必须返回一个对象
+			return {
+				label: '编辑',
+				callback(done) {
+					console.log(row);
+					//编辑
+					current.value = 'edit';
+					done();
+					openDrawer.value = true;
+					nextTick(()=> {
+
+						console.log(JSON.parse(row.template ));
+						refs.dp.set(JSON.parse(row.template ) || [])
+					})
+
+
+
+				}
+			};
+		}],
 	columns: [
 		{
 			type: "selection",
@@ -80,7 +162,7 @@ const Table = useTable({
 		},
 		{
 
-			props: 'template',
+			prop: 'template',
 			label: '模板代码',
 			component: {
 				name: 'cl-code-json',
@@ -90,9 +172,14 @@ const Table = useTable({
 			}
 		},
 		{
-			props: 'templateV',
-			label: '模板版本',
-			width: 200
+			prop: 'model',
+			label: '模型',
+			component: {
+				name: 'cl-code-json',
+				props: {
+					popover: true
+				}
+			}
 		},
 		{
 			label: "状态",

@@ -191,7 +191,7 @@ function getData() {
 				id: e.id,
 				name: e.name,
 				label: e.component.props.label,
-
+				component: e.component
 			};
 
 			if (isGroup) {
@@ -207,7 +207,8 @@ function getData() {
 					prop: e.component.props.paramName || e.component.props.label,
 					name: e.name,
 					getType: e.getType,
-					props: e.component.props
+					props: e.component.props,
+
 				};
 			}
 		});
@@ -259,6 +260,12 @@ function saveDraft() {
 function getDraft() {
 	const list: Dp.DemoItem[] = storage.get("design.pageCode") || [];
 
+	console.log(list);
+	set(list)
+}
+
+//设置
+function set(list: Dp.DemoItem[]) {
 	form.list = list.map((e) => {
 		e.config = refs.demo.getConfig(e.name);
 		return e;
@@ -279,6 +286,7 @@ mitt.on("dp.setActive", setActive);
 
 const dp = {
 	form,
+	set,
 	get,
 	getGroup,
 	getData,
