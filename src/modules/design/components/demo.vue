@@ -148,12 +148,106 @@ const demo: Dp.DemoItem[] = [
 
 			items: [
 				{
-					label: "日期",
-					prop: "format",
+					label: '日期类型',
+					prop: 'type',
+					component: {
+						name: 'el-select',
+						props: {
+							placeholder: '请选择时间类型'
+						},
+						options: [
+							{
+								label: '年份 - year',
+								value: 'year'
+							},
+
+							{
+								label: '月份 - month',
+								value: 'month'
+							},
+							{
+								label: '日期 - date',
+								value: 'date'
+							},
+							{
+								label: '星期 - week',
+								value: 'week'
+							},
+							{
+								label: '日期时间 - datetime',
+								value: 'datetime'
+							},
+							{
+								label: '年份集合',
+								value: 'years'
+							},
+							{
+								label: '月份集合',
+								value: 'months'
+							},
+
+							{
+								label: '日期集合',
+								value: 'dates'
+							},
+							{
+								label: '日期区间',
+								value: 'datetimerange'
+							},
+
+						]
+					}
+				},
+				{
+					//【很重要】是否隐藏
+					hidden({ scope }) {
+						// scope 为表单值
+						// 返回一个 boolean 来控制当前表单项的隐藏/显示
+						return scope.type != 'datetimerange';
+					},
+					label: '开始日期提示',
+					prop: 'startPlaceholder',
+					component: {
+						name: 'el-input'
+					}
+				},
+				{
+					//【很重要】是否隐藏
+					hidden({ scope }) {
+						// scope 为表单值
+						// 返回一个 boolean 来控制当前表单项的隐藏/显示
+						return scope.type != 'datetimerange';
+					},
+					label: '结束日期提示',
+					prop: 'endPlaceholder',
+					component: {
+						name: 'el-input'
+					}
+				},
+				{
+					label: "日期格式",
+					prop: "valueFormat",
+					renderLabel: (
+						<p class="form-label">
+							日期格式 <span>需要和日期类型相对应，否则容易显示错误</span>
+						</p>
+					),
 					value: "YYYY-MM-DD",
 					component: {
 						name: "el-radio-group",
 						options: [
+							{
+								label: '年份',
+								value: 'YYYY'
+							},
+							{
+								label: '月份',
+								value: 'MM'
+							},
+							{
+								label: '星期',
+								value: 'dddd'
+							},
 							{
 								label: "年-月-日",
 								value: "YYYY-MM-DD"
@@ -167,159 +261,6 @@ const demo: Dp.DemoItem[] = [
 								value: "YYYY-MM-DD HH:mm:ss"
 							}
 						]
-					}
-				}
-			]
-		}
-	},
-	{
-		label: "时间区间",
-		name: "time-range",
-		component: {
-			name: "demo-time-range",
-			props: {
-				labelStart: "开始时间",
-				labelEnd: "结束时间",
-				labelDuration: "时长",
-				placeholder: "请选择",
-				arrowIcon: true,
-				duration: true,
-				durationType: "hour"
-			}
-		},
-		config: {
-			defs: [],
-			items: [
-				{
-					label: "标题",
-					renderLabel: (
-						<p class="form-label">
-							标题 <span>最多20字</span>
-						</p>
-					),
-					prop: "labelStart",
-					value: "开始时间",
-					component: {
-						name: "el-input",
-						props: {
-							maxlength: 20,
-							clearable: true,
-							placeholder: "请输入"
-						}
-					}
-				},
-				{
-					label: "标题",
-					renderLabel: (
-						<p class="form-label">
-							标题 <span>最多20字</span>
-						</p>
-					),
-					prop: "labelEnd",
-					value: "结束时间",
-					component: {
-						name: "el-input",
-						props: {
-							maxlength: 20,
-							clearable: true,
-							placeholder: "请输入"
-						}
-					}
-				},
-				{
-					label: "提示文字",
-					renderLabel: (
-						<p class="form-label">
-							提示文字 <span>最多50字</span>
-						</p>
-					),
-					prop: "placeholder",
-					value: "请输入",
-					component: {
-						name: "el-input",
-						props: {
-							maxlength: 50,
-							clearable: true,
-							placeholder: "请输入"
-						}
-					}
-				},
-				{
-					label: "日期",
-					prop: "format",
-					value: "YYYY-MM-DD",
-					component: {
-						name: "el-radio-group",
-						options: [
-							{
-								label: "年-月-日",
-								value: "YYYY-MM-DD"
-							},
-							{
-								label: "年-月-日 时:分",
-								value: "YYYY-MM-DD HH:mm"
-							},
-							{
-								label: "年-月-日 时:分:秒",
-								value: "YYYY-MM-DD HH:mm:ss"
-							}
-						]
-					}
-				},
-				{
-					label: "是否计算时长",
-					prop: "duration",
-					component: {
-						name: "demo-checkbox",
-						props: {
-							text: "开启"
-						}
-					}
-				},
-				{
-					label: "时长类型",
-					prop: "durationType",
-					value: "hour",
-					hidden({ scope }) {
-						return !scope.duration;
-					},
-					component: {
-						name: "el-radio-group",
-						options: [
-							{
-								label: "小时",
-								value: "hour"
-							},
-							{
-								label: "半天",
-								value: "half_day"
-							},
-							{
-								label: "天",
-								value: "day"
-							}
-						]
-					}
-				},
-				{
-					label: "标题",
-					renderLabel: (
-						<p class="form-label">
-							标题 <span>最多20字</span>
-						</p>
-					),
-					hidden({ scope }) {
-						return !scope.duration;
-					},
-					prop: "labelDuration",
-					value: "时长",
-					component: {
-						name: "el-input",
-						props: {
-							maxlength: 20,
-							clearable: true,
-							placeholder: "请输入"
-						}
 					}
 				}
 			]
@@ -331,19 +272,23 @@ const demo: Dp.DemoItem[] = [
 		config: {
 			items: [
 				{
-					label: "数值类型",
-					prop: "type",
-					value: "int",
+					label: "数据类型",
+					prop: "precision",
+					value: 0,
 					component: {
 						name: "el-radio-group",
 						options: [
 							{
 								label: "整数",
-								value: "int"
+								value: 0
 							},
 							{
-								label: "小数",
-								value: "decimal"
+								label: "一位小数",
+								value: 1
+							},
+							{
+								label: "两位位小数",
+								value: 2
 							}
 						]
 					}
@@ -366,87 +311,6 @@ const demo: Dp.DemoItem[] = [
 			]
 		}
 	},
-	/*{
-		label: "金钱",
-		name: "amount",
-		config: {
-			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
-				{
-					label: "单位",
-					prop: "unit",
-					value: '$',
-					component: {
-						name: "el-radio-group",
-						options: [
-							{
-								label: '美元',
-								value: '$'
-							},
-							{
-								label: '人民币',
-								value: '￥'
-							}
-						],
-					}
-				},
-				{
-					label: "大写",
-					prop: "uppercase",
-					component: {
-						name: "demo-checkbox",
-						props: {
-							text: "显示大写",
-							tips: "（输入数字后自动显示大写）"
-						}
-					}
-				}
-			]
-		}
-	},*/
-	/*{
-		label: "地址",
-		name: "address",
-		getType: "auto",
-		config: {
-			defs: ["title"]
-		}
-	},*/
-	/*{
-		label: "附件",
-		name: "file",
-		component: {
-			name: "demo-item"
-		},
-		config: {
-			defs: ["title"],
-			item: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				}
-			]
-		}
-	},*/
 	{
 		label: "组合",
 		name: "group",
@@ -460,30 +324,6 @@ const demo: Dp.DemoItem[] = [
 			defs: ["title", 'paramName']
 		}
 	},
-	/*{
-		label: "图片",
-		name: "pic",
-		component: {
-			name: "demo-item"
-		},
-		config: {
-			defs: ["title"],
-			items: [
-				{
-					label: '参数名称',
-					prop: 'paramName',
-					renderLabel: (
-						<p class="form-label">
-							参数名称 <span>展示在页面的参数名称，建议用英文</span>
-						</p>
-					),
-					component: {
-						name: 'el-input',
-					}
-				},
-			]
-		}
-	}*/
 ];
 
 function getDemo(name: string, data?: any) {
@@ -566,7 +406,7 @@ const tab = reactive<{ list: { label: string; children: Dp.DemoItem[] }[] }>({
 								]
 							}
 						}),
-						getDemo("time-range"),
+
 						getDemo("textarea", {
 							label: "加班原因",
 							required: true
@@ -610,9 +450,7 @@ const tab = reactive<{ list: { label: string; children: Dp.DemoItem[] }[] }>({
 								}
 							}
 						},
-						getDemo("time-range", {
-							required: true
-						}),
+
 						getDemo("textarea", {
 							label: "出差事由"
 						}),
@@ -739,13 +577,7 @@ const tab = reactive<{ list: { label: string; children: Dp.DemoItem[] }[] }>({
 								}
 							}
 						}),
-						getDemo("time-range", {
-							component: {
-								props: {
-									duration: true
-								}
-							}
-						}),
+
 						getDemo("textarea", {
 							label: "请假事由",
 							required: true
@@ -760,7 +592,7 @@ const tab = reactive<{ list: { label: string; children: Dp.DemoItem[] }[] }>({
 					label: "外出审批",
 					name: "waichu",
 					group: [
-						getDemo("time-range"),
+
 						getDemo("textarea", {
 							label: "外出事由",
 							required: true

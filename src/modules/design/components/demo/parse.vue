@@ -4,6 +4,8 @@ import { h, nextTick, onMounted, reactive, ref, resolveComponent, toRaw, watch, 
 import { isArray, isString } from 'lodash-es';
 import { ElInput, ElMessage } from 'element-plus';
 
+const emits = defineEmits(['update:modelValue'])
+
 const props = defineProps({
 	modelValue: {
 		type: String,
@@ -27,13 +29,15 @@ function getComponent(field: any): any {
 		case 'number': preConfig = {
 			name: 'el-input-number',
 			props: {
-				max: Math.max(...field.props.range) == Number.POSITIVE_INFINITY? 1000 : Math.max(...field.props.range),
+				max: Math.max(...field.props.range) == Number.NEGATIVE_INFINITY? 1000 : Math.max(...field.props.range),
 				min: Math.min(...field.props.range ) == Number.POSITIVE_INFINITY? 0 : Math.min(...field.props.range )
 			}
 		} ; break;
-		case 'time' : preConfig = { name: 'el-date-picker'} ; break;
+		case 'time' : preConfig = { name: 'el-date-picker' } ; break;
+		case 'radio' : preConfig = { name: 'el-radio-group' } ; break;
+		case 'checkbox' : preConfig = { name: 'el-checkbox-group' }; break;
+		default : preConfig = { name: 'el-input'};
 	}
-	console.log(preConfig);
 	return preConfig;
 }
 
@@ -81,7 +85,6 @@ function parse (fields): ClForm.Items | undefined {
 				span: 24,
 				component: {
 					name: getComponent(field).name,
-
 					props: {
 						...Object.assign(preProcessData(field.props), getComponent(field)?.props || {})
 					},
@@ -104,6 +107,8 @@ function parse (fields): ClForm.Items | undefined {
 }
 
 watch(()=> Form.value?.form, ()=> {
+	//监听并回传
+	emits('update:modelValue', Form.value?.form)
 	console.log(Form.value?.form);
 }, { immediate: true, deep: true });
 
@@ -123,6 +128,7 @@ onMounted(()=>{
 
 <template>
 <div style="width: 100%">
+	<el-empty :image-size="100" v-show="!fieldOptions || fieldOptions.length === 0" description="请先设计字段" />
 	<cl-form ref="Form"  inner>
 
 	</cl-form>

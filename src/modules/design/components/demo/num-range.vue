@@ -1,8 +1,8 @@
 <template>
 	<div class="num-range">
-		<el-input-number v-model="v[0]" :max="v[1]" @change="onChange" />
+		<el-input-number v-model="v[0]" :max="v[1]" @change="onChange" placeholder="请输入" />
 		<span>至</span>
-		<el-input-number v-model="v[1]" :min="v[0]" @change="onChange" />
+		<el-input-number v-model="v[1]" :min="v[0]" @change="onChange" placeholder="请输入"  />
 	</div>
 </template>
 

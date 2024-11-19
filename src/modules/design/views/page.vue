@@ -31,12 +31,15 @@
 							<el-button type="info" @click="save">保存草稿</el-button>
 							<el-button type="success" @click="create">生成代码</el-button>
 							<el-button type="primary" @click="open">预览</el-button>
+							<el-button type="success" @click="open">提交</el-button>
 						</div>
 
 						<el-dialog v-model="openInputPreview" title="预览" destroy-on-close >
 							<cl-parse-input :fieldOptions="refs.dp.getData()"/>
 
 						</el-dialog>
+
+
 						<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
 					</div>
 				</el-drawer>
@@ -59,7 +62,13 @@ const Crud = useCrud({
 })
 
 const Table = useTable({
-	contextMenu: ["refresh", "check", "order-desc", "order-asc"],
+	contextMenu: ["refresh", "check", "order-desc", "order-asc", {
+		label: '编辑',
+		callback(item,done) {
+			console.log(item);
+			done();
+		},
+	}],
 	columns: [
 		{
 			type: "selection",
@@ -101,7 +110,7 @@ const Table = useTable({
 				},
 			],
 		},
-	]
+	],
 })
 
 const { refs, setRefs } = useCool();
