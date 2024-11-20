@@ -1,26 +1,39 @@
 <script setup lang="ts">
-import { nextTick, onMounted, ref } from 'vue';
+import { onMounted, ref } from 'vue';
 
 import { useForm } from '@cool-vue/crud';
 import { service, useRefs } from '/@/cool';
+import { useRoute, useRouter } from 'vue-router';
+import { ElMessage } from 'element-plus';
 
-	const { refs, setRefs } = useRefs();
+const { refs, setRefs } = useRefs();
 	const Form = useForm()
 	const initLoading = ref(true);
 
 	const categoryOptions = ref([]);
 
-	const goodsId = ref();
+	//商品id--判断商品是否存在
+	const id = ref();
 
+	const route = useRoute()
+	const router = useRouter();
 
 	const template = ref<string>();
+
 	onMounted(async () => {
+
+
+
+
 		//初始化
 		categoryOptions.value = await service.goods.category.allLevel();
+
 		const params = await service.goods.field.list({ status: 1});
+
+
 		template.value = params[0].template
 
-		initLoading.value = false;
+
 
 		Form.value?.open({
 			items: [
@@ -68,7 +81,7 @@ import { service, useRefs } from '/@/cool';
 					group: 'base', // 标识
 					label: '示例图',
 					prop: 'cover',
-					// required: true,
+					required: true,
 					component: {
 						name: 'cl-upload'
 					}
@@ -136,7 +149,18 @@ import { service, useRefs } from '/@/cool';
 
 
 			],
+
 			on: {
+				open: async (data)=> {
+					id.value = route.query?.id;
+					Form.value?.showLoading();
+					if (id.value) {
+						const details = await service.goods.info.info({ id: 1 });
+						Object.assign(data, { ...details, category: JSON.parse(details?.category || '') })
+					}
+					Form.value?.hideLoading()
+
+				},
 				//【提示】当第一组验证通过后，会自动切换到下一组展示，直到全部通过才可提交
 				submit: async (data, { done, close }) => {
 					const isValid = await refs?.params.validate();
@@ -144,16 +168,23 @@ import { service, useRefs } from '/@/cool';
 						//TODO【bug】 官方的changeTab无法使用
 						await Form.value?.Tabs.change('param', false)
 					}
-					if(!goodsId.value) {
-						service.goods.info.add(data)
+					console.log(Form.value);
+					if(!id.value) {
+						await service.goods.info.add({...data,category: JSON.stringify(data.category),  params: JSON.stringify(data.params) || ''})
 					} else {
-						service.goods.info.update({...data, id: goodsId.value})
+						await service.goods.info.update({...data, id: id.value,category: JSON.stringify(data.category),  params: JSON.stringify(data.params) || ''})
 					}
-
 					done();
+					ElMessage.success('保存成功');
+					await router.push({path: '/goods/info'})
 				}
 			}
 		});
+
+
+		initLoading.value = false;
+
+
 
 	})
 

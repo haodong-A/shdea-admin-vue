@@ -173,8 +173,6 @@ const Table = useTable({
 						refs.dp.set(JSON.parse(row.template ) || [])
 					})
 
-
-
 				}
 			};
 		}],

@@ -4,7 +4,7 @@
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
 			<!-- 新增按钮 -->
-			<cl-add-btn />
+			<el-button type="primary" v-permission="service.goods.info.permission.add" @click="router.push({ path: '/goods/details'})"> 新增 </el-button>
 			<!-- 删除按钮 -->
 			<cl-multi-delete-btn />
 
@@ -24,8 +24,6 @@
 			<cl-pagination />
 		</cl-row>
 
-		<!-- 新增、编辑 -->
-		<cl-upsert ref="Upsert" />
 	</cl-crud>
 </template>
 
@@ -33,6 +31,7 @@
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { reactive } from "vue";
+import { useRouter } from 'vue-router';
 
 const { service } = useCool();
 
@@ -44,52 +43,22 @@ const options = reactive({
 	]
 });
 
-// cl-upsert
-const Upsert = useUpsert({
-	items: [
-		{
-			label: "编号",
-			prop: "goodsId",
-			component: { name: "el-input", props: { clearable: true } },
-			required: true
-		},
-		{
-			label: "标题",
-			prop: "title",
-			component: { name: "el-input", props: { clearable: true } },
-			required: true
-		},
-		{
-			label: '示例图',
-			prop: "cover",
+//路由
+const router = useRouter();
 
-		},
-		{
-			label: "分类",
-			prop: "category",
-			component: { name: "el-checkbox-group", options: [], props: {} },
-			value: [],
-			required: true
-		},
-		{
-			label: "品牌",
-			prop: "brand",
-			component: { name: "el-checkbox-group", options: [], props: {} },
-			value: [],
-			required: true
-		},
-		{
-			label: "状态",
-			prop: "status",
-			component: { name: "el-radio-group", options: options.status },
-			value: 0,
-			required: true
-		}
-	]
-});
+// cl-upsert
 
 // cl-table
 const Table = useTable({
+	contextMenu: ['delete', 'check', (row)=> {
+		return {
+			label: '编辑',
+			callback(done) {
+				router.push({ path: '/goods/details', query: { id: row.id } })
+				done();
+			},
+		}
+	}],
 	columns: [
 		{ type: "selection" },
 		{ label: "编号", prop: "goodsId", minWidth: 140 },

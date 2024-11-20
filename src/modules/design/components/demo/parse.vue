@@ -1,8 +1,9 @@
 <script setup lang="tsx" name="cl-parse-input">
 import { useForm } from '@cool-vue/crud';
-import { h, nextTick, onMounted, reactive, ref, resolveComponent, toRaw, watch, watchEffect } from 'vue';
+import { nextTick, onMounted, toRaw, watch } from 'vue';
 import { isArray, isString } from 'lodash-es';
-import { ElInput, ElMessage } from 'element-plus';
+import { ElMessage } from 'element-plus';
+import Json from '/$/base/components/code/json.vue';
 
 const emits = defineEmits(['update:modelValue'])
 
@@ -104,19 +105,35 @@ function parse (fields): ClForm.Items | undefined {
 
 }
 
+watch(()=>props.modelValue, (value)=> {
+	if (value && isString(value)) {
+		const parseObj = JSON.parse(value);
+
+		const form = Form.value?.form
+		Object.keys(form).forEach((item) => {
+			form[item] = parseObj[item]
+		})
+
+	}
+})
 watch(()=> Form.value?.form, ()=> {
+	Form.value?.getForm();
 	//监听并回传
-	emits('update:modelValue', Form.value?.form)
+	emits('update:modelValue', Form.value?.getForm())
 }, { deep: true });
 
 onMounted(()=>{
-	const fields = toRaw(props.fieldOptions);
-	Form.value?.open({
-		op: {
-			hidden: true
-		},
-		items: parse(fields),
-	});
+
+	nextTick(()=> {
+		const fields = toRaw(props.fieldOptions);
+		Form.value?.open({
+			op: {
+				hidden: true
+			},
+			items: parse(fields),
+		});
+	})
+
 
 })
 async function validate(): Promise<boolean>{
