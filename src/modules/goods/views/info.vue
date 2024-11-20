@@ -125,7 +125,6 @@ const Table = useTable({
 			sortable: true,
 			component: { name: "cl-date-text" }
 		},
-		{ type: "op", buttons: ["edit", "delete"] }
 	]
 });
 

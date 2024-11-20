@@ -8,7 +8,7 @@ const emits = defineEmits(['update:modelValue'])
 
 const props = defineProps({
 	modelValue: {
-		type: String,
+		type: [String , Object],
 		default: ''
 	},
 	fieldOptions: {
@@ -17,8 +17,6 @@ const props = defineProps({
 		default: ''
 	}
 });
-
-const values = ref<any>({})
 
 //预处理输入框
 function getComponent(field: any): any {
@@ -96,7 +94,7 @@ function parse (fields): ClForm.Items | undefined {
 	} else if(isString(fields)){
 		try {
 			const fieldsObj = JSON.parse(fields);
-			parse(fieldsObj);
+			return parse(fieldsObj);
 		} catch (e) {
 			ElMessage.error('模板出错，请重新获取编辑页面');
 		}
@@ -109,29 +107,35 @@ function parse (fields): ClForm.Items | undefined {
 watch(()=> Form.value?.form, ()=> {
 	//监听并回传
 	emits('update:modelValue', Form.value?.form)
-	console.log(Form.value?.form);
-}, { immediate: true, deep: true });
+}, { deep: true });
 
 onMounted(()=>{
 	const fields = toRaw(props.fieldOptions);
-	console.log(parse(fields));
 	Form.value?.open({
 		op: {
 			hidden: true
 		},
 		items: parse(fields),
-	})
+	});
+
 })
+async function validate(): Promise<boolean>{
+	let isPass = true
+	await Form.value?.validate((isValid, invalidFields)=>{
+		isPass =  isValid;
+	})
+	return isPass
+}
 
-
+defineExpose({
+	validate
+})
 </script>
 
 <template>
 <div style="width: 100%">
 	<el-empty :image-size="100" v-show="!fieldOptions || fieldOptions.length === 0" description="请先设计字段" />
-	<cl-form ref="Form"  inner>
-
-	</cl-form>
+	<cl-form ref="Form"  inner />
 </div>
 </template>
 

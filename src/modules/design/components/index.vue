@@ -259,8 +259,6 @@ function saveDraft() {
 // 获取草稿
 function getDraft() {
 	const list: Dp.DemoItem[] = storage.get("design.pageCode") || [];
-
-	console.log(list);
 	set(list)
 }
 

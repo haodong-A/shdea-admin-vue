@@ -12,7 +12,9 @@
 
 				<cl-flex1 />
 				<!-- 关键字搜索 -->
-
+				<cl-filter>
+					<cl-select :options="options.status" prop="status" :width="120" />
+				</cl-filter>
 				<cl-search-key placeholder="搜索关键字" />
 			</cl-row>
 
@@ -20,7 +22,7 @@
 				<cl-table ref="Table"></cl-table>
 			</cl-row>
 
-				<el-drawer v-model="openDrawer" size="100%" title="编辑模板">
+				<el-drawer v-model="openDrawer" size="100%" title="编辑模板" destroy-on-close>
 					<div class="form">
 						<div class="container">
 							<dp :ref="setRefs('dp')" />
@@ -43,6 +45,10 @@
 						<cl-editor-preview title="代码预览" name="monaco" :ref="setRefs('preview')" />
 					</div>
 				</el-drawer>
+			<cl-row>
+				<cl-flex1 />
+				<cl-pagination />
+			</cl-row>
 		</cl-crud>
 
 </template>
@@ -55,6 +61,18 @@ import { nextTick, ref } from 'vue';
 import { useCrud, useTable, useUpsert } from '@cool-vue/crud';
 import { Fo } from '/$/design/types';
 
+const options = {
+	status: [
+		{
+			label: '启用',
+			value: 1,
+		},
+		{
+			label: '关闭',
+			value: 0
+		}
+	]
+}
 
 const Crud = useCrud({
 	service: service.goods.field,
@@ -101,13 +119,23 @@ const Upsert = useUpsert({
 			}
 		}
 	],
-	onSubmit(data,  { next, done, close }) {
+	onInfo(data, { next, done }) {
+		next({id: selectorId.value})
+	},
+	onSubmit: async (data,  { next, done, close }) => {
 		const template = refs.dp.getData();
+		if(!template || !template.length) {
+			ElMessage.warning("请先设计模板，不能为空");
+			done();
+			return;
+		}
 		const templateV = new Date().getTime().toString();
 		const model = buildModel(template);
 
-		next({ ...data, template, templateV, model })
 
+		await next({ ...data, template: JSON.stringify(template), templateV, model: JSON.stringify(model) });
+
+		openDrawer.value = false;
 
 	},
 });
@@ -136,15 +164,12 @@ const Table = useTable({
 			return {
 				label: '编辑',
 				callback(done) {
-					console.log(row);
 					//编辑
 					current.value = 'edit';
 					done();
 					openDrawer.value = true;
-					Upsert.value?.setForm('id', row.id)
+					selectorId.value=row.id
 					nextTick(()=> {
-
-						console.log(JSON.parse(row.template ));
 						refs.dp.set(JSON.parse(row.template ) || [])
 					})
 

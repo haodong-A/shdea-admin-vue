@@ -1,26 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue';
-	import ClForm from '/~/crud/src/components/form';
-	import { useForm } from '@cool-vue/crud';
-import { service } from '/@/cool';
-import MultipleInput from '/$/goods/components/multiple-input.vue';
-import ParamInput from '/$/goods/components/param-input.vue';
+import { nextTick, onMounted, ref } from 'vue';
 
-	const form = useForm()
+import { useForm } from '@cool-vue/crud';
+import { service, useRefs } from '/@/cool';
+
+	const { refs, setRefs } = useRefs();
+	const Form = useForm()
 	const initLoading = ref(true);
 
 	const categoryOptions = ref([]);
 
-	//参数字典
-	const paramsType = ref();
+	const goodsId = ref();
+
+
+	const template = ref<string>();
 	onMounted(async () => {
 		//初始化
 		categoryOptions.value = await service.goods.category.allLevel();
-		paramsType.value = await service.dict.type.list();
+		const params = await service.goods.field.list({ status: 1});
+		template.value = params[0].template
 
 		initLoading.value = false;
 
-		form.value?.open({
+		Form.value?.open({
 			items: [
 				{
 					//【很重要】必须为 tabs
@@ -120,8 +122,13 @@ import ParamInput from '/$/goods/components/param-input.vue';
 
 				{
 					group: 'param',
+					prop: 'params',
 					component: {
-						name: 'slot-params',
+						ref: setRefs("params"),
+						name: 'cl-parse-input',
+						props: {
+							fieldOptions: template.value
+						}
 					},
 				},
 
@@ -131,19 +138,25 @@ import ParamInput from '/$/goods/components/param-input.vue';
 			],
 			on: {
 				//【提示】当第一组验证通过后，会自动切换到下一组展示，直到全部通过才可提交
-				submit(data, { done, close }) {
-					console.log(data);
+				submit: async (data, { done, close }) => {
+					const isValid = await refs?.params.validate();
+					if(!isValid) {
+						//TODO【bug】 官方的changeTab无法使用
+						await Form.value?.Tabs.change('param', false)
+					}
+					if(!goodsId.value) {
+						service.goods.info.add(data)
+					} else {
+						service.goods.info.update({...data, id: goodsId.value})
+					}
+
 					done();
 				}
 			}
 		});
 
 	})
-const mock = `{
-    "size": "Json.CN",
-    "param_type": 1,
-    "voltage": "20v"
-}`
+
 </script>
 
 <template>
@@ -151,10 +164,8 @@ const mock = `{
 
 		<div style="height: 100%; width: 100%;">
 		<!---->
-			<cl-form ref="form" :inner="true">
-				<template #slot-params="{ scope }">
-					<param-input v-model="scope.params"  />
-				</template>
+			<cl-form ref="Form" :inner="true">
+
 
 			</cl-form>
 		</div>
