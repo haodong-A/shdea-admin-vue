@@ -113,6 +113,19 @@ const { refs, setRefs } = useRefs();
 				},
 				{
 					group: 'base', // 标识
+					label: '描述',
+					prop: 'description',
+					span:16,
+					component: {
+						name: 'el-input',
+						props: {
+							type: 'textarea',
+							placeholder: '请输入描述'
+						}
+					}
+				},
+				{
+					group: 'base', // 标识
 					label: '状态',
 					prop: 'status',
 					span:16,
@@ -156,7 +169,7 @@ const { refs, setRefs } = useRefs();
 					Form.value?.showLoading();
 					if (id.value) {
 						const details = await service.goods.info.info({ id: 1 });
-						Object.assign(data, { ...details, category: JSON.parse(details?.category || '') })
+						Object.assign(data, { ...details, category: details?.category?.split(",").map(Number) })
 					}
 					Form.value?.hideLoading()
 
@@ -168,15 +181,14 @@ const { refs, setRefs } = useRefs();
 						//TODO【bug】 官方的changeTab无法使用
 						await Form.value?.Tabs.change('param', false)
 					}
-					console.log(Form.value);
 					if(!id.value) {
-						await service.goods.info.add({...data,category: JSON.stringify(data.category),  params: JSON.stringify(data.params) || ''})
+						await service.goods.info.add({...data,category: data.category.join(","),  params: JSON.stringify(data.params) || ''})
 					} else {
-						await service.goods.info.update({...data, id: id.value,category: JSON.stringify(data.category),  params: JSON.stringify(data.params) || ''})
+						await service.goods.info.update({...data, id: id.value,category: data.category.join(","),  params: JSON.stringify(data.params) || ''})
 					}
 					done();
 					ElMessage.success('保存成功');
-					await router.push({path: '/goods/info'})
+					await router.push({path: '/goods/info' })
 				}
 			}
 		});
@@ -195,10 +207,8 @@ const { refs, setRefs } = useRefs();
 
 		<div style="height: 100%; width: 100%;">
 		<!---->
-			<cl-form ref="Form" :inner="true">
+			<cl-form ref="Form" :inner="true" />
 
-
-			</cl-form>
 		</div>
 	</el-scrollbar>
 </template>

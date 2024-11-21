@@ -30,7 +30,7 @@
 <script lang="ts" name="goods-info" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
-import { reactive } from "vue";
+import { computed, onMounted, reactive, watch } from 'vue';
 import { useRouter } from 'vue-router';
 
 const { service } = useCool();
@@ -40,16 +40,28 @@ const options = reactive({
 	status: [
 		{ label: "下架", value: 0 },
 		{ label: "上架", value: 1 },
-	]
+	],
+	category: [] as any[]
 });
+
+
+onMounted(async ()=>{
+	const list = await service.goods.category.list();
+	options.category = list.map((item)=> {
+		return{
+			label: item.categoryName,
+			value: item.id.toString(),
+		}
+	})
+})
+
 
 //路由
 const router = useRouter();
 
-// cl-upsert
-
 // cl-table
 const Table = useTable({
+
 	contextMenu: ['delete', 'check', (row)=> {
 		return {
 			label: '编辑',
@@ -61,7 +73,8 @@ const Table = useTable({
 	}],
 	columns: [
 		{ type: "selection" },
-		{ label: "编号", prop: "goodsId", minWidth: 140 },
+		{ label: "编号", prop: "goodsId" },
+		{ label: "标题", prop: "title" },
 		{
 			label: "示例图",
 			prop: "cover",
@@ -70,29 +83,18 @@ const Table = useTable({
 				name: "cl-image"
 			}
 		},
-		{ label: "分类", prop: "category", dict: [], minWidth: 120 },
+		{
+			label: "分类",
+			prop: "category",
+			dict: computed(()=> options.category),
+			minWidth: 120
+		},
 		{ label: "品牌", prop: "brand", dict: [], minWidth: 120 },
 		{
 			label: "状态",
 			prop: "status",
 			dict: options.status,
 			minWidth: 120
-		},
-		{ label: "浏览次数", prop: "viewCount", minWidth: 140 },
-		{ label: "收藏次数", prop: "favoriteCount", minWidth: 140 },
-		{
-			label: "更新时间",
-			prop: "updateTime",
-			minWidth: 170,
-			sortable: true,
-			component: { name: "cl-date-text" }
-		},
-		{
-			label: "创建时间",
-			prop: "createTime",
-			minWidth: 170,
-			sortable: true,
-			component: { name: "cl-date-text" }
 		},
 	]
 });

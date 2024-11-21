@@ -73,7 +73,6 @@ const { ViewGroup } = useViewGroup({
 		list.sort((a, b) => a.sortOrder - b.sortOrder)
 		parentCategory.value = list;
 		return list.map((e) => {
-			console.log(e.status);
 			return {
 				...e,
 			};
