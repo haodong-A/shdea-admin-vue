@@ -120,6 +120,9 @@ const { refs, setRefs } = useRefs();
 						name: 'el-input',
 						props: {
 							type: 'textarea',
+							showWordLimit: true,
+							maxlength: 400,
+							autosize: { minRows: 3, maxRows: 10 },
 							placeholder: '请输入描述'
 						}
 					}

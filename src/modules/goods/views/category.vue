@@ -46,8 +46,7 @@
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/src/cool";
 import { useViewGroup } from '/src/plugins/view';
-import { onMounted, reactive, ref, watch } from 'vue';
-import { Eps } from '@cool-vue/vite-plugin/types';
+import { reactive, ref, watch } from 'vue';
 
 
 const { service, refs, setRefs} = useCool();

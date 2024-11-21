@@ -16,6 +16,9 @@
 		<cl-row>
 			<!-- 数据表格 -->
 			<cl-table ref="Table" />
+			<cl-dialog title="规格列表" v-model="visible">
+				<spec v-model="currentSpec" />
+			</cl-dialog>
 		</cl-row>
 
 		<cl-row>
@@ -25,13 +28,15 @@
 		</cl-row>
 
 	</cl-crud>
+
 </template>
 
 <script lang="ts" name="goods-info" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
-import { computed, onMounted, reactive, watch } from 'vue';
+import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
+import Spec from '/$/goods/components/spec.vue';
 
 const { service } = useCool();
 
@@ -59,6 +64,11 @@ onMounted(async ()=>{
 //路由
 const router = useRouter();
 
+//规格列表
+const visible = ref(false)
+
+const currentSpec = ref()
+
 // cl-table
 const Table = useTable({
 
@@ -70,7 +80,18 @@ const Table = useTable({
 				done();
 			},
 		}
-	}],
+	},
+		(row)=> {
+		return {
+			label: '规格',
+			callback(done) {
+				visible.value = true;
+				currentSpec.value = row.id;
+			    done()
+			},
+			}
+		}
+	],
 	columns: [
 		{ type: "selection" },
 		{ label: "编号", prop: "goodsId" },
