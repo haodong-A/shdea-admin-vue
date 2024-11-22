@@ -16,7 +16,7 @@
 		<cl-row>
 			<!-- 数据表格 -->
 			<cl-table ref="Table" />
-			<cl-dialog title="规格列表" v-model="visible">
+			<cl-dialog title="规格列表" v-model="visible" width="80%">
 				<spec v-model="currentSpec" />
 			</cl-dialog>
 		</cl-row>
@@ -31,7 +31,7 @@
 
 </template>
 
-<script lang="ts" name="goods-info" setup>
+<script lang="tsx" name="goods-info" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
 import { computed, onMounted, reactive, ref, watch } from 'vue';
@@ -101,21 +101,30 @@ const Table = useTable({
 			prop: "cover",
 			minWidth: 140,
 			component: {
-				name: "cl-image"
+				name: 'cl-image'
 			}
 		},
 		{
 			label: "分类",
 			prop: "category",
 			dict: computed(()=> options.category),
-			minWidth: 120
+			minWidth: 120,
 		},
 		{ label: "品牌", prop: "brand", dict: [], minWidth: 120 },
 		{
 			label: "状态",
 			prop: "status",
 			dict: options.status,
-			minWidth: 120
+			minWidth: 120,
+			component:{
+				name: "cl-switch",
+				props: {
+					inlinePrompt: true,
+					activeText: '上架',
+					inactiveText: '下架',
+					style:"--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
+				}
+			}
 		},
 	]
 });
