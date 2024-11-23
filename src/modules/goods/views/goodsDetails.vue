@@ -30,8 +30,10 @@ const { refs, setRefs } = useRefs();
 
 		const params = await service.goods.field.list({ status: 1});
 
+		if (params && params.length > 0) {
+			template.value = params[0].template;
+		}
 
-		template.value = params[0].template
 
 
 

@@ -92,8 +92,9 @@ function parse (fields): ClForm.Items | undefined {
 
 			}
 		})
-	} else if(isString(fields)){
+	} else if(fields && isString(fields)){
 		try {
+
 			const fieldsObj = JSON.parse(fields);
 			return parse(fieldsObj);
 		} catch (e) {
