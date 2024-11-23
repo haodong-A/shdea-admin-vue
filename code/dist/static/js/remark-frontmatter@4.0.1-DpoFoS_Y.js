@@ -1,0 +1,1 @@
+import{f as m}from"./micromark-extension-frontmatter@1.1.1-BvDOKmUd.js";import{f as s,a as f}from"./mdast-util-frontmatter@1.0.1-ClHhy600.js";function k(t="yaml"){const r=this.data();a("micromarkExtensions",m(t)),a("fromMarkdownExtensions",s(t)),a("toMarkdownExtensions",f(t));function a(o,n){(r[o]?r[o]:r[o]=[]).push(n)}}export{k as r};

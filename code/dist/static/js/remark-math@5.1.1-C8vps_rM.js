@@ -1,0 +1,1 @@
+import{m as s}from"./micromark-extension-math@2.1.2-StTlgfH1.js";import{m,a as i}from"./mdast-util-math@2.0.2-Boy2OOKg.js";function c(r={}){const a=this.data();o("micromarkExtensions",s(r)),o("fromMarkdownExtensions",i()),o("toMarkdownExtensions",m(r));function o(t,n){(a[t]?a[t]:a[t]=[]).push(n)}}export{c as r};

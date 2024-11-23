@@ -1,0 +1,1 @@
+import{l as n}from"./js-yaml@4.1.0-CvKA-w4V.js";import{r as l}from"./remark-frontmatter@4.0.1-DpoFoS_Y.js";function u({onError:t}={}){return{remark:e=>e.use(l).use(()=>(a,o)=>{const r=a.children[0];if((r==null?void 0:r.type)==="yaml")try{o.frontmatter=n(r.value)}catch(m){t==null||t(m)}})}}export{u as f};

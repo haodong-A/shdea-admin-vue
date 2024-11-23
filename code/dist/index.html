@@ -1,0 +1,226 @@
+<!doctype html>
+<html lang="en">
+	<head>
+		<meta charset="utf-8" />
+		<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+		<meta name="referer" content="never" />
+		<meta name="renderer" content="webkit" />
+		<meta
+			name="viewport"
+			content="width=device-width, initial-scale=1, maximum-scale=1.0, user-scalable=0"
+		/>
+		<title></title>
+		<link rel="icon" href="./favicon.ico" />
+		<style>
+			html,
+			body,
+			#app {
+				height: 100%;
+			}
+
+			* {
+				margin: 0;
+				padding: 0;
+			}
+
+			.preload__wrap {
+				display: flex;
+				flex-direction: column;
+				letter-spacing: 1px;
+				background-color: #2f3447;
+				position: fixed;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 100%;
+				z-index: 9999;
+				transition: all 0.3s ease-in;
+				opacity: 1;
+				pointer-events: none;
+			}
+
+			.preload__wrap.is-hide {
+				opacity: 0;
+			}
+
+			.preload__container {
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				flex-direction: column;
+				width: 100%;
+				user-select: none;
+				-webkit-user-select: none;
+				flex-grow: 1;
+			}
+
+			.preload__name {
+				font-size: 30px;
+				color: #fff;
+				letter-spacing: 5px;
+				font-weight: bold;
+				margin-bottom: 30px;
+			}
+
+			.preload__title {
+				color: #fff;
+				font-size: 14px;
+				margin: 30px 0 20px 0;
+			}
+
+			.preload__sub-title {
+				color: #ababab;
+				font-size: 12px;
+			}
+
+			.preload__footer {
+				text-align: center;
+				padding: 10px 0 20px 0;
+			}
+
+			.preload__footer a {
+				font-size: 12px;
+				color: #ababab;
+				text-decoration: none;
+			}
+
+			.preload__loading {
+				height: 30px;
+				width: 30px;
+				border-radius: 30px;
+				border: 7px solid currentColor;
+				border-bottom-color: #2f3447 !important;
+				position: relative;
+				animation:
+					r 1s infinite cubic-bezier(0.17, 0.67, 0.83, 0.67),
+					bc 2s infinite ease-in;
+				transform: rotate(0deg);
+			}
+
+			@keyframes r {
+				from {
+					transform: rotate(0deg);
+				}
+
+				to {
+					transform: rotate(360deg);
+				}
+			}
+
+			.preload__loading::after,
+			.preload__loading::before {
+				content: "";
+				display: inline-block;
+				position: absolute;
+				bottom: -2px;
+				height: 7px;
+				width: 7px;
+				border-radius: 10px;
+				background-color: currentColor;
+			}
+
+			.preload__loading::after {
+				left: -1px;
+			}
+
+			.preload__loading::before {
+				right: -1px;
+			}
+
+			@keyframes bc {
+				0% {
+					color: #689cc5;
+				}
+
+				25% {
+					color: #b3b7e2;
+				}
+
+				50% {
+					color: #93dbe9;
+				}
+
+				75% {
+					color: #abbd81;
+				}
+
+				100% {
+					color: #689cc5;
+				}
+			}
+		</style>
+		<script type="module" crossorigin src="/static/js/index-DjrkcC4y.js"></script>
+		<link rel="modulepreload" crossorigin href="/static/js/@braintree_sanitize-url@6.0.4-BB1FEM6a.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vue_shared@3.5.12-UFe9jxSY.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vue_reactivity@3.5.12-vtUNgENk.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vue_runtime-core@3.5.12-Bt7zQ28n.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vue_runtime-dom@3.5.12-iSYHT88p.js">
+		<link rel="modulepreload" crossorigin href="/static/js/lodash-es@4.17.21-D6PnhKvy.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vueuse_shared@9.13.0_vue@3.5.12_typescript@5.5.4_-u9BR5ga7.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vueuse_core@9.13.0_vue@3.5.12_typescript@5.5.4_-B3H9WZsa.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@element-plus_icons-vue@2.3.1_vue@3.5.12_typescript@5.5.4_-DwlSpvcG.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@sxzz_popperjs-es@2.11.7-DkudPAZk.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@ctrl_tinycolor@3.6.1--gef7wIN.js">
+		<link rel="modulepreload" crossorigin href="/static/js/dayjs@1.11.13-DXimfR00.js">
+		<link rel="modulepreload" crossorigin href="/static/js/async-validator@4.2.5-DbzRl2Zc.js">
+		<link rel="modulepreload" crossorigin href="/static/js/memoize-one@6.0.0-DQFWdy6B.js">
+		<link rel="modulepreload" crossorigin href="/static/js/normalize-wheel-es@1.2.0-D2sExr9L.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@floating-ui_utils@0.2.8-BSxVqCX2.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@floating-ui_core@1.6.8-B67JZAQv.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@floating-ui_dom@1.6.11-Db5K7U0i.js">
+		<link rel="modulepreload" crossorigin href="/static/js/lodash-unified@1.0.3_@types_lodash-es@4.17.12_lodash-es@4.17.21_lodash@4.17.21-D8rsWRp7.js">
+		<link rel="modulepreload" crossorigin href="/static/js/vue@3.5.12_typescript@5.5.4-kKmasoJt.js">
+		<link rel="modulepreload" crossorigin href="/static/js/element-plus@2.8.4_vue@3.5.12_typescript@5.5.4_-C7CHjwzj.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vueuse_shared@11.1.0_vue@3.5.12_typescript@5.5.4_-DXriuop5.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@vueuse_core@11.1.0_vue@3.5.12_typescript@5.5.4_-BKaerpSy.js">
+		<link rel="modulepreload" crossorigin href="/static/js/store@2.0.12-RoMfFez2.js">
+		<link rel="modulepreload" crossorigin href="/static/js/mitt@3.0.1-C1z4c41a.js">
+		<link rel="modulepreload" crossorigin href="/static/js/axios@1.7.7-CCb-kr4I.js">
+		<link rel="modulepreload" crossorigin href="/static/js/nprogress@0.2.0-B8S133N7.js">
+		<link rel="modulepreload" crossorigin href="/static/js/vue-demi@0.14.10_vue@3.5.12_typescript@5.5.4_-DvPnGcuI.js">
+		<link rel="modulepreload" crossorigin href="/static/js/pinia@2.2.4_typescript@5.5.4_vue@3.5.12_typescript@5.5.4_-CVf9nHlw.js">
+		<link rel="modulepreload" crossorigin href="/static/js/micromark-util-character@1.2.0-D-NaLusr.js">
+		<link rel="modulepreload" crossorigin href="/static/js/micromark-factory-space@1.1.0-C57A7NS2.js">
+		<link rel="modulepreload" crossorigin href="/static/js/katex@0.16.11-CvgdMzdh.js">
+		<link rel="modulepreload" crossorigin href="/static/js/micromark-extension-math@2.1.2-StTlgfH1.js">
+		<link rel="modulepreload" crossorigin href="/static/js/longest-streak@3.1.0-BHNUWYJP.js">
+		<link rel="modulepreload" crossorigin href="/static/js/decode-named-character-reference@1.0.2-C3-224fz.js">
+		<link rel="modulepreload" crossorigin href="/static/js/micromark-util-decode-numeric-character-reference@1.1.0-DRnCnno4.js">
+		<link rel="modulepreload" crossorigin href="/static/js/micromark-util-decode-string@1.1.0-CdHYbWAu.js">
+		<link rel="modulepreload" crossorigin href="/static/js/mdast-util-to-markdown@1.5.0-D9VzXa1u.js">
+		<link rel="modulepreload" crossorigin href="/static/js/mdast-util-math@2.0.2-Boy2OOKg.js">
+		<link rel="modulepreload" crossorigin href="/static/js/remark-math@5.1.1-C8vps_rM.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@bytemd_plugin-math@1.21.0_bytemd@1.21.0-Dc_JUVYX.js">
+		<link rel="modulepreload" crossorigin href="/static/js/vue-router@4.4.5_vue@3.5.12_typescript@5.5.4_-DGEeQixy.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@wangeditor_editor@5.1.23-BNs7_II4.js">
+		<link rel="modulepreload" crossorigin href="/static/js/@wangeditor_plugin-link-card@1.0.0_@wangeditor_editor@5.1.23_snabbdom@3.6.2-D_kdJ7Fs.js">
+		<link rel="modulepreload" crossorigin href="/static/js/mockjs@1.1.0-hXCvQ4kl.js">
+		<link rel="modulepreload" crossorigin href="/static/js/comm-DyJRlPK0.js">
+		<link rel="modulepreload" crossorigin href="/static/js/tslib@2.3.0-BDyQ-Jie.js">
+		<link rel="modulepreload" crossorigin href="/static/js/zrender@5.6.0-CH1asNwC.js">
+		<link rel="modulepreload" crossorigin href="/static/js/echarts@5.5.1-D8FyPvXx.js">
+		<link rel="modulepreload" crossorigin href="/static/js/vue-echarts@7.0.3_@vue_runtime-core@3.5.12_echarts@5.5.1_vue@3.5.12_typescript@5.5.4_-tmE62Ovn.js">
+		<link rel="stylesheet" crossorigin href="/static/css/element-plus@2.8.4_vue@3.5.12_typescript@5.5-DFEtZ-6b.css">
+		<link rel="stylesheet" crossorigin href="/static/css/nprogress@0.2-BUMXTAWU.css">
+		<link rel="stylesheet" crossorigin href="/static/css/@wangeditor_editor@5.1-ClYh1QsV.css">
+		<link rel="stylesheet" crossorigin href="/static/css/comm-CSVY0trO.css">
+		<link rel="stylesheet" crossorigin href="/static/css/index-DgD95_Eo.css">
+	</head>
+
+	<body>
+		<div class="preload__wrap" id="Loading">
+			<div class="preload__container">
+				<p class="preload__name">SHDEA-ADMIN</p>
+				<div class="preload__loading"></div>
+				<p class="preload__title">正在加载资源...</p>
+				<p class="preload__sub-title">初次加载资源可能需要较多时间 请耐心等待</p>
+			</div>
+
+			<div class="preload__footer">
+				<a href="https://www.shdea-cook.com" target="_blank"> https://www.shdea-cook.com </a>
+			</div>
+		</div>
+
+		<div id="app"></div>
+	</body>
+</html>
