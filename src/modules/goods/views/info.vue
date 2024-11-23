@@ -9,6 +9,9 @@
 			<cl-multi-delete-btn />
 
 			<cl-flex1 />
+			<cl-filter>
+				<cl-select prop="status" :options="options.status" />
+			</cl-filter>
 			<!-- 关键字搜索 -->
 			<cl-search-key placeholder="搜索关键字" />
 		</cl-row>
@@ -37,6 +40,8 @@ import { useCool } from "/@/cool";
 import { computed, onMounted, reactive, ref, watch } from 'vue';
 import { useRouter } from 'vue-router';
 import Spec from '/$/goods/components/spec.vue';
+import ClFilter from '/~/crud/src/components/filter';
+import ClSelect from '/#/crud/components/select';
 
 const { service } = useCool();
 

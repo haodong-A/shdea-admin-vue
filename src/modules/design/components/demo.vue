@@ -609,7 +609,7 @@ const tab = reactive<{ list: { label: string; children: Dp.DemoItem[] }[] }>({
 });
 
 // 解析
-function parse(item: Dp.DemoItem) {
+function parse(item: Dp.DemoItem): any {
 	function next(data: Dp.DemoItem, options: any = {}) {
 		const { autoInc = true } = options;
 
@@ -670,7 +670,7 @@ function parse(item: Dp.DemoItem) {
 		}
 
 		// 表单项组件
-		const items = [];
+		const items:any[] = [];
 
 		// 标题
 		if (d.config.defs.includes("title")) {
@@ -712,6 +712,7 @@ function parse(item: Dp.DemoItem) {
 					}
 				}
 				});
+
 		}
 
 		// 占位符
@@ -749,7 +750,7 @@ function parse(item: Dp.DemoItem) {
 		return d;
 	}
 
-	let v = null;
+	let v: any | null = null;
 
 	if (item.group) {
 		if (dp.hasTemp()) {
@@ -786,7 +787,7 @@ function parse(item: Dp.DemoItem) {
 
 // 获取配置
 function getConfig(name: string) {
-	let d = null;
+	let d: any = null;
 
 	tab.list.find((e) => {
 		d = e.children.find((a) => a.name == name);
