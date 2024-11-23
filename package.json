@@ -10,7 +10,7 @@
 		"type-check": "vue-tsc --build --force",
 		"lint": "eslint . --fix",
 		"format": "prettier --write src/",
-		"fix-memory-limit": "cross-env LIMIT=8048 increase-memory-limit"
+		"fix-memory-limit": "cross-env LIMIT=4096 increase-memory-limit"
 	},
 	"dependencies": {
 		"@bytemd/plugin-breaks": "^1.21.0",
