@@ -4,12 +4,13 @@
 	"type": "module",
 	"scripts": {
 		"dev": "vite --host",
-		"build": "run-p type-check fix-memory-limit \"build-only {@}\" --",
+		"build": "run-p type-check setup fix-memory-limit \"build-only {@}\" --",
 		"preview": "vite preview",
 		"build-only": "vite build",
 		"type-check": "vue-tsc --build --force",
 		"lint": "eslint . --fix",
 		"format": "prettier --write src/",
+		"setup": "npm install -g increase-memory-limit cross-env",
 		"fix-memory-limit": "cross-env LIMIT=8048 increase-memory-limit"
 	},
 	"dependencies": {
