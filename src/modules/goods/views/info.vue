@@ -4,19 +4,20 @@
 			<!-- 刷新按钮 -->
 			<cl-refresh-btn />
 			<!-- 新增按钮 -->
-			<el-button type="primary" v-permission="service.goods.info.permission.add" @click="router.push({ path: '/goods/details'})"> 新增 </el-button>
+			<cl-add-btn />
 			<!-- 删除按钮 -->
 			<cl-multi-delete-btn />
 
 			<cl-flex1 />
 			<cl-filter>
-				<cl-select prop="status" :options="options.status" />
+				<cl-select prop="status" :options="status" />
 			</cl-filter>
 			<!-- 关键字搜索 -->
 			<cl-search-key placeholder="搜索关键字" />
 		</cl-row>
 
 		<cl-row>
+			<cl-upsert ref="Upsert"/>
 			<!-- 数据表格 -->
 			<cl-table ref="Table" />
 			<cl-dialog title="规格列表" v-model="visible" width="80%">
@@ -37,37 +38,131 @@
 <script lang="tsx" name="goods-info" setup>
 import { useCrud, useTable, useUpsert } from "@cool-vue/crud";
 import { useCool } from "/@/cool";
-import { computed, onMounted, reactive, ref, watch } from 'vue';
-import { useRouter } from 'vue-router';
+import { computed, onMounted, ref } from 'vue';
 import Spec from '/$/goods/components/spec.vue';
-import ClFilter from '/~/crud/src/components/filter';
-import ClSelect from '/#/crud/components/select';
 
 const { service } = useCool();
 
-// 选项
-const options = reactive({
-	status: [
-		{ label: "下架", value: 0 },
-		{ label: "上架", value: 1 },
-	],
-	category: [] as any[]
-});
+const status = [
+	{ label: "下架", value: 0 },
+	{ label: "上架", value: 1 },
+]
+
+const category = ref<any[]>([]);
+
+const Upsert = useUpsert({
+	items: [
+		{
+			label: '编号',
+			prop: 'goodsId',
+			required: true,
+			span: 16,
+			component: {
+				name: 'el-input'
+			}
+		},
+		{
+			label: '标题',
+			prop: 'title',
+			required: true,
+			span: 16,
+			component: {
+				name: 'el-input'
+			}
+		},
+		{
+			label: '示例图',
+			prop: 'cover',
+			required: true,
+			component: {
+				name: 'cl-upload'
+			}
+		},
+		{
+			label: '分类',
+			prop: 'category',
+			required: true,
+			span:16,
+			hook: {
+				bind: ['split', 'number'],
+				submit: ['join'],
+			},
+			component: {
+				name: 'el-cascader',
+				props: {
+					options: computed(()=> {
+						return category.value;
+					})
+				}
+			}
+		},
+		{
+			label: '品牌',
+			prop: 'brand',
+			span:16,
+			component: {
+				name: 'el-input',
+				props: {
+					placeholder: '请输入品牌名称，默认SHDEA'
+				}
+			}
+		},
+		{
+			label: '描述',
+			prop: 'description',
+			span:16,
+			component: {
+				name: 'el-input',
+				props: {
+					type: 'textarea',
+					showWordLimit: true,
+					maxlength: 400,
+					autosize: { minRows: 3, maxRows: 10 },
+					placeholder: '请输入描述'
+				}
+			}
+		},
+		{
+			label: '状态',
+			prop: 'status',
+			span:16,
+			value: 1,
+			component: {
+				name: 'el-switch',
+				props: {
+					inlinePrompt: true,
+					style: {
+						'--el-switch-on-color': '#13ce66',
+						'--el-switch-off-color': '#ff4949',
+					},
+					activeValue: 1,
+					inactiveValue: 0,
+					activeText: '上架',
+					inactiveText: '下架',
+				}
+			}
+		},
+	]
+})
+
 
 
 onMounted(async ()=>{
-	const list = await service.goods.category.list();
-	options.category = list.map((item)=> {
-		return{
+
+	const list = await service.goods.category.list() || [];
+
+	const parent =  list.filter((item)=> !item.parentCategoryId );
+
+	category.value = parent.map((item)=> {
+		const children = list.filter(it => item.id == it.parentCategoryId).map(child => {return {label: child.categoryName, value: child.id}});
+		return {
 			label: item.categoryName,
-			value: item.id.toString(),
+			value: item.id,
+			children,
 		}
 	})
 })
 
-
-//路由
-const router = useRouter();
 
 //规格列表
 const visible = ref(false)
@@ -77,15 +172,7 @@ const currentSpec = ref()
 // cl-table
 const Table = useTable({
 
-	contextMenu: ['delete', 'check', (row)=> {
-		return {
-			label: '编辑',
-			callback(done) {
-				router.push({ path: '/goods/details', query: { id: row.id } })
-				done();
-			},
-		}
-	},
+	contextMenu: ['delete', 'check', 'edit',
 		(row)=> {
 		return {
 			label: '规格',
@@ -112,14 +199,30 @@ const Table = useTable({
 		{
 			label: "分类",
 			prop: "category",
-			dict: computed(()=> options.category),
+			dict: computed(()=> {
+				const arr: any[] = [];
+				function getItem(items): any {
+
+					items.forEach((item)=> {
+						if (item.children && item.children.length) {
+							getItem(item.children)
+						}
+						arr.push( {
+							label: item.label,
+							value: item.value.toString()
+						});
+					})
+				}
+				getItem(category.value)
+				return arr
+			}),
 			minWidth: 120,
 		},
-		{ label: "品牌", prop: "brand", dict: [], minWidth: 120 },
+		{ label: "品牌", prop: "brand", minWidth: 120 },
 		{
 			label: "状态",
 			prop: "status",
-			dict: options.status,
+			dict: status,
 			minWidth: 120,
 			component:{
 				name: "cl-switch",
