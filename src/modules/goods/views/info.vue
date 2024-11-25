@@ -54,11 +54,15 @@ const Upsert = useUpsert({
 	items: [
 		{
 			label: '编号',
+			renderLabel: <el-tooltip content="该编号主要用于标记产品，例如产品编号 sd-1001a, sd-1001b, 则可以输入sd-1000">编号</el-tooltip>,
 			prop: 'goodsId',
 			required: true,
 			span: 16,
 			component: {
-				name: 'el-input'
+				name: 'el-input',
+				props: {
+					placeholder: '请输入编号',
+				}
 			}
 		},
 		{

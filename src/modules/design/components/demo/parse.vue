@@ -3,7 +3,6 @@ import { useForm } from '@cool-vue/crud';
 import { nextTick, onMounted, toRaw, watch } from 'vue';
 import { isArray, isString } from 'lodash-es';
 import { ElMessage } from 'element-plus';
-import Json from '/$/base/components/code/json.vue';
 
 const emits = defineEmits(['update:modelValue'])
 
@@ -22,6 +21,7 @@ const props = defineProps({
 //预处理输入框
 function getComponent(field: any): any {
 	let preConfig = {};
+	console.log(field);
 	switch (field.name) {
 		case 'text': preConfig = { name: 'el-input'} ; break;
 		case 'textarea': preConfig = { name: 'el-input', props: {type: 'textarea'}} ; break;

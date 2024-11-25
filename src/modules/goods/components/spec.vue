@@ -73,6 +73,18 @@ function create(value?:number){
 			},
 			{
 				group: 'base',
+				label: '编号',
+				prop: 'specModel',
+				required: true,
+				component: {
+					name: 'el-input',
+					prop: {
+						placeholder: '请输入产品编号'
+					}
+				}
+			},
+			{
+				group: 'base',
 				label: '类型',
 				prop: 'specType',
 				required: true,
@@ -186,7 +198,7 @@ function create(value?:number){
 			},
 			{
 				group: 'param',
-				prop: 'params',
+				prop: 'specParam',
 				component: {
 					ref: setRefs("params"),
 					name: 'cl-parse-input',
@@ -217,11 +229,19 @@ function create(value?:number){
 
 			},
 			submit: async (data, { done, close }) => {
-				console.log(value);
+				const isPass = await refs.params.validate();
+
+				if(!isPass) {
+					FormSpec.value?.Tabs.change('param', false);
+					done();
+					return;
+				}
+
+				const specParam = data.specParam ? JSON.stringify(data.specParam): '';
 				if (value) {
-					await service.goods.spec.update({ ...data, id: value, infoId: props.modelValue })
+					await service.goods.spec.update({ ...data, id: value, infoId: props.modelValue, specParam })
 				} else {
-					await service.goods.spec.add({ ...data,  infoId: props.modelValue })
+					await service.goods.spec.add({ ...data,  infoId: props.modelValue, specParam })
 				}
 				done();
 				ElMessage.success("保存成功");
@@ -252,10 +272,14 @@ const TableSpec = useTable({
 			prop: 'specName',
 		},
 		{
+			label: '产品编号',
+			prop: 'specModel',
+		},
+		{
 			label: '主图',
 			prop: 'mainImage',
 			component: {
-				name: 'el-image'
+				name: 'cl-image'
 			}
 		},
 		{

@@ -23,22 +23,13 @@ const props = defineProps({
 
 const values = ref<GoodsMoq[]>([]);
 
-const total = ref<number>(0);
 
 watch(()=> props.modelValue, (val) => {
 	if(props.modelValue && isString(props.modelValue)) {
 		values.value = JSON.parse(props.modelValue) || []
 	}
 })
-watch(()=>total.value , (val) => {
-	values.value[total.value-1] = {
-		price: 0.00,
-		moq: {
-			max: 0,
-			min: 0,
-		}
-	}
-})
+
 
 watch(()=> values.value, (val) => {
 	emits('update:modelValue', JSON.stringify(values.value));
@@ -46,18 +37,18 @@ watch(()=> values.value, (val) => {
 
 function deleteRow(index: number) {
 	values.value.splice(index, 1)
-	total.value -=1
 }
 
-
-//先不弄
-function change(value: GoodsMoq) {
-
-	if(value.moq.max < value.moq.min) {
-
+function addRow() {
+	values.value.push({
+		price: 0.00,
+		moq: {
+		max: 0,
+			min: 0,
 	}
-
+})
 }
+
 </script>
 
 
@@ -84,7 +75,7 @@ function change(value: GoodsMoq) {
 		</cl-row>
 	</template>
 	<cl-row>
-		<el-button plain @click="total+=1"> 点击添加价格 </el-button>
+		<el-button plain @click="addRow"> 点击添加价格 </el-button>
 	</cl-row>
 
 </div>
