@@ -1,11 +1,12 @@
 <script setup lang="tsx" name="cl-spec">
 import { useCrud, useForm, useTable } from '@cool-vue/crud';
-import { service } from '/@/cool';
+import { service, useRefs } from '/@/cool';
 import { useDict } from '/$/dict';
 import { isString } from 'lodash-es';
 import { ElMessage } from 'element-plus';
 import ClFilter from '/~/crud/src/components/filter';
 import ClSelect from '/#/crud/components/select';
+import { onMounted, ref } from 'vue';
 
 const props = defineProps({
 	modelValue: {
@@ -15,14 +16,26 @@ const props = defineProps({
 
 const FormSpec = useForm();
 
+const { setRefs, refs } = useRefs()
+
 const dict = useDict()
 const options = [
 		{ label: "正常", value: 0 },
 		{ label: "禁用", value: 1 },
 	];
+
+const template = ref<string>();
+
+onMounted(async ()=>{
+	const params = await service.goods.field.list({ status: 1});
+
+	template.value = params[0].template
+})
 function create(value?:number){
 
 	FormSpec.value?.open({
+		dialog: {
+		},
 		width: '80%',
 		title: '编辑规格',
 		items: [
@@ -37,6 +50,10 @@ function create(value?:number){
 						{
 							label: '基本信息', // 标题
 							value: 'base' // 唯一标识
+						},
+						{
+							label: '规格参数',
+							value: 'param'
 						},
 						{
 							label: '详情页',
@@ -166,6 +183,17 @@ function create(value?:number){
 						style:"--el-switch-on-color: #13ce66; --el-switch-off-color: #ff4949"
 					}
 				}
+			},
+			{
+				group: 'param',
+				prop: 'params',
+				component: {
+					ref: setRefs("params"),
+					name: 'cl-parse-input',
+					props: {
+						fieldOptions: template.value
+					}
+				},
 			},
 			{
 				group: 'details',

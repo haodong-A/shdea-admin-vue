@@ -1,10 +1,23 @@
 FROM node:lts-alpine
 WORKDIR /build
 # 设置npm镜像
-RUN npm config set registry https://registry.npmmirror.com
+RUN npm config set registry https://registry.npmmirror.com/
 COPY package.json /build/package.json
-RUN npm install && npm install -g increase-memory-limit cross-env
+RUN npm install -g pnpm
+
+RUN pnpm config set registry https://registry.npmmirror.com
+
+#ENV PNPM_HOME=/usr/local/.pnpm
+#ENV PATH=$PNPM_HOME:$PATH
+#
+#RUN pnpm setup
+
+RUN pnpm install
+
+RUN pnpm install increase-memory-limit cross-env
+
 COPY ./ /build
+
 RUN npm run build
 
 FROM nginx
