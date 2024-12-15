@@ -98,7 +98,6 @@ const { ViewGroup } = useViewGroup({
 						name: 'el-input',
 						props: {
 							placeholder: '请输入分类名称',
-							maxlength: 20,
 							clearable: true
 						}
 					},
